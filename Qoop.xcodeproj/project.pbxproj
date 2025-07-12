@@ -6,6 +6,17 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4B116E342E22BF8400B45CEC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E2C2E22BF8400B45CEC /* ContentView.swift */; };
+		4B116E352E22BF8400B45CEC /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E2E2E22BF8400B45CEC /* Persistence.swift */; };
+		4B116E362E22BF8400B45CEC /* Qoop.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E302E22BF8400B45CEC /* Qoop.xcdatamodeld */; };
+		4B116E372E22BF8400B45CEC /* QoopApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E312E22BF8400B45CEC /* QoopApp.swift */; };
+		4B116E382E22BF8400B45CEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B116E2B2E22BF8400B45CEC /* Assets.xcassets */; };
+		4B116E3C2E22BF8C00B45CEC /* QoopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E3A2E22BF8C00B45CEC /* QoopTests.swift */; };
+		4B116E402E22BF9100B45CEC /* QoopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E3D2E22BF9100B45CEC /* QoopUITests.swift */; };
+		4B116E412E22BF9100B45CEC /* QoopUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E3E2E22BF9100B45CEC /* QoopUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		4B116E0E2E22BF7000B45CEC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,38 +38,17 @@
 		4B116DF92E22BF6E00B45CEC /* Qoop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Qoop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B116E0D2E22BF7000B45CEC /* QoopTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QoopTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B116E172E22BF7000B45CEC /* QoopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QoopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B116E2B2E22BF8400B45CEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4B116E2C2E22BF8400B45CEC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4B116E2D2E22BF8400B45CEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4B116E2E2E22BF8400B45CEC /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		4B116E2F2E22BF8400B45CEC /* Qoop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Qoop.entitlements; sourceTree = "<group>"; };
+		4B116E312E22BF8400B45CEC /* QoopApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QoopApp.swift; sourceTree = "<group>"; };
+		4B116E332E22BF8400B45CEC /* Qoop.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Qoop.xcdatamodel; sourceTree = "<group>"; };
+		4B116E3A2E22BF8C00B45CEC /* QoopTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QoopTests.swift; sourceTree = "<group>"; };
+		4B116E3D2E22BF9100B45CEC /* QoopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QoopUITests.swift; sourceTree = "<group>"; };
+		4B116E3E2E22BF9100B45CEC /* QoopUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QoopUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		4B116E1F2E22BF7000B45CEC /* Exceptions for "Qoop" folder in "Qoop" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 4B116DF82E22BF6E00B45CEC /* Qoop */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		4B116DFB2E22BF6E00B45CEC /* Qoop */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				4B116E1F2E22BF7000B45CEC /* Exceptions for "Qoop" folder in "Qoop" target */,
-			);
-			path = Qoop;
-			sourceTree = "<group>";
-		};
-		4B116E102E22BF7000B45CEC /* QoopTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = QoopTests;
-			sourceTree = "<group>";
-		};
-		4B116E1A2E22BF7000B45CEC /* QoopUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = QoopUITests;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		4B116DF62E22BF6E00B45CEC /* Frameworks */ = {
@@ -88,9 +78,9 @@
 		4B116DF02E22BF6E00B45CEC = {
 			isa = PBXGroup;
 			children = (
-				4B116DFB2E22BF6E00B45CEC /* Qoop */,
-				4B116E102E22BF7000B45CEC /* QoopTests */,
-				4B116E1A2E22BF7000B45CEC /* QoopUITests */,
+				4B116E322E22BF8400B45CEC /* Qoop */,
+				4B116E3B2E22BF8C00B45CEC /* QoopTests */,
+				4B116E3F2E22BF9100B45CEC /* QoopUITests */,
 				4B116DFA2E22BF6E00B45CEC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -103,6 +93,37 @@
 				4B116E172E22BF7000B45CEC /* QoopUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4B116E322E22BF8400B45CEC /* Qoop */ = {
+			isa = PBXGroup;
+			children = (
+				4B116E312E22BF8400B45CEC /* QoopApp.swift */,
+				4B116E2C2E22BF8400B45CEC /* ContentView.swift */,
+				4B116E2E2E22BF8400B45CEC /* Persistence.swift */,
+				4B116E2B2E22BF8400B45CEC /* Assets.xcassets */,
+				4B116E2D2E22BF8400B45CEC /* Info.plist */,
+				4B116E2F2E22BF8400B45CEC /* Qoop.entitlements */,
+				4B116E302E22BF8400B45CEC /* Qoop.xcdatamodeld */,
+			);
+			path = Qoop;
+			sourceTree = "<group>";
+		};
+		4B116E3B2E22BF8C00B45CEC /* QoopTests */ = {
+			isa = PBXGroup;
+			children = (
+				4B116E3A2E22BF8C00B45CEC /* QoopTests.swift */,
+			);
+			path = QoopTests;
+			sourceTree = "<group>";
+		};
+		4B116E3F2E22BF9100B45CEC /* QoopUITests */ = {
+			isa = PBXGroup;
+			children = (
+				4B116E3D2E22BF9100B45CEC /* QoopUITests.swift */,
+				4B116E3E2E22BF9100B45CEC /* QoopUITestsLaunchTests.swift */,
+			);
+			path = QoopUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,9 +140,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				4B116DFB2E22BF6E00B45CEC /* Qoop */,
 			);
 			name = Qoop;
 			packageProductDependencies = (
@@ -143,9 +161,6 @@
 			dependencies = (
 				4B116E0F2E22BF7000B45CEC /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				4B116E102E22BF7000B45CEC /* QoopTests */,
-			);
 			name = QoopTests;
 			packageProductDependencies = (
 			);
@@ -165,9 +180,6 @@
 			);
 			dependencies = (
 				4B116E192E22BF7000B45CEC /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				4B116E1A2E22BF7000B45CEC /* QoopUITests */,
 			);
 			name = QoopUITests;
 			packageProductDependencies = (
@@ -225,6 +237,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B116E382E22BF8400B45CEC /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +262,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B116E342E22BF8400B45CEC /* ContentView.swift in Sources */,
+				4B116E352E22BF8400B45CEC /* Persistence.swift in Sources */,
+				4B116E362E22BF8400B45CEC /* Qoop.xcdatamodeld in Sources */,
+				4B116E372E22BF8400B45CEC /* QoopApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,6 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B116E3C2E22BF8C00B45CEC /* QoopTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +281,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B116E402E22BF9100B45CEC /* QoopUITests.swift in Sources */,
+				4B116E412E22BF9100B45CEC /* QoopUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,6 +595,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4B116E302E22BF8400B45CEC /* Qoop.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4B116E332E22BF8400B45CEC /* Qoop.xcdatamodel */,
+			);
+			currentVersion = 4B116E332E22BF8400B45CEC /* Qoop.xcdatamodel */;
+			path = Qoop.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4B116DF12E22BF6E00B45CEC /* Project object */;
 }
