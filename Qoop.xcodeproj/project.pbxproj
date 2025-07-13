@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4B116E342E22BF8400B45CEC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E2C2E22BF8400B45CEC /* ContentView.swift */; };
 		4B116E352E22BF8400B45CEC /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E2E2E22BF8400B45CEC /* Persistence.swift */; };
 		4B116E362E22BF8400B45CEC /* Qoop.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E302E22BF8400B45CEC /* Qoop.xcdatamodeld */; };
 		4B116E372E22BF8400B45CEC /* QoopApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E312E22BF8400B45CEC /* QoopApp.swift */; };
@@ -15,6 +14,16 @@
 		4B116E3C2E22BF8C00B45CEC /* QoopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E3A2E22BF8C00B45CEC /* QoopTests.swift */; };
 		4B116E402E22BF9100B45CEC /* QoopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E3D2E22BF9100B45CEC /* QoopUITests.swift */; };
 		4B116E412E22BF9100B45CEC /* QoopUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E3E2E22BF9100B45CEC /* QoopUITestsLaunchTests.swift */; };
+		4B116E472E22C64C00B45CEC /* BudgetListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E462E22C64C00B45CEC /* BudgetListScreen.swift */; };
+		4B116E492E22E5C700B45CEC /* AddBudgetScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E482E22E5C700B45CEC /* AddBudgetScreen.swift */; };
+		4B116E4C2E22EA1D00B45CEC /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E4B2E22EA1D00B45CEC /* String+Extensions.swift */; };
+		4B116E4F2E23F3DE00B45CEC /* BudgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E4E2E23F3DE00B45CEC /* BudgetManager.swift */; };
+		4B116E512E2405A100B45CEC /* Budget+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E502E2405A100B45CEC /* Budget+extensions.swift */; };
+		4B116E542E241A4700B45CEC /* BudgetCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E532E241A4700B45CEC /* BudgetCardView.swift */; };
+		4B116E582E2422E900B45CEC /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E572E2422E900B45CEC /* DataModel.swift */; };
+		4B116E5A2E24294A00B45CEC /* IconPickerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E592E24294A00B45CEC /* IconPickerStyle.swift */; };
+		4B116E5C2E242CD300B45CEC /* IconPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E5B2E242CD300B45CEC /* IconPicker.swift */; };
+		4B116E5E2E242E6900B45CEC /* CV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E5D2E242E6900B45CEC /* CV.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +48,6 @@
 		4B116E0D2E22BF7000B45CEC /* QoopTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QoopTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B116E172E22BF7000B45CEC /* QoopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QoopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B116E2B2E22BF8400B45CEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4B116E2C2E22BF8400B45CEC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4B116E2D2E22BF8400B45CEC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B116E2E2E22BF8400B45CEC /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		4B116E2F2E22BF8400B45CEC /* Qoop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Qoop.entitlements; sourceTree = "<group>"; };
@@ -48,6 +56,16 @@
 		4B116E3A2E22BF8C00B45CEC /* QoopTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QoopTests.swift; sourceTree = "<group>"; };
 		4B116E3D2E22BF9100B45CEC /* QoopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QoopUITests.swift; sourceTree = "<group>"; };
 		4B116E3E2E22BF9100B45CEC /* QoopUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QoopUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		4B116E462E22C64C00B45CEC /* BudgetListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetListScreen.swift; sourceTree = "<group>"; };
+		4B116E482E22E5C700B45CEC /* AddBudgetScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBudgetScreen.swift; sourceTree = "<group>"; };
+		4B116E4B2E22EA1D00B45CEC /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		4B116E4E2E23F3DE00B45CEC /* BudgetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetManager.swift; sourceTree = "<group>"; };
+		4B116E502E2405A100B45CEC /* Budget+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Budget+extensions.swift"; sourceTree = "<group>"; };
+		4B116E532E241A4700B45CEC /* BudgetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCardView.swift; sourceTree = "<group>"; };
+		4B116E572E2422E900B45CEC /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		4B116E592E24294A00B45CEC /* IconPickerStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconPickerStyle.swift; sourceTree = "<group>"; };
+		4B116E5B2E242CD300B45CEC /* IconPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconPicker.swift; sourceTree = "<group>"; };
+		4B116E5D2E242E6900B45CEC /* CV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CV.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,8 +116,12 @@
 		4B116E322E22BF8400B45CEC /* Qoop */ = {
 			isa = PBXGroup;
 			children = (
+				4B116E552E24227D00B45CEC /* IconPicker */,
 				4B116E312E22BF8400B45CEC /* QoopApp.swift */,
-				4B116E2C2E22BF8400B45CEC /* ContentView.swift */,
+				4B116E522E241A2A00B45CEC /* Views */,
+				4B116E4D2E23F3C800B45CEC /* Managers */,
+				4B116E4A2E22EA0600B45CEC /* Extensions */,
+				4B116E452E22C5B400B45CEC /* Screens */,
 				4B116E2E2E22BF8400B45CEC /* Persistence.swift */,
 				4B116E2B2E22BF8400B45CEC /* Assets.xcassets */,
 				4B116E2D2E22BF8400B45CEC /* Info.plist */,
@@ -124,6 +146,51 @@
 				4B116E3E2E22BF9100B45CEC /* QoopUITestsLaunchTests.swift */,
 			);
 			path = QoopUITests;
+			sourceTree = "<group>";
+		};
+		4B116E452E22C5B400B45CEC /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				4B116E462E22C64C00B45CEC /* BudgetListScreen.swift */,
+				4B116E482E22E5C700B45CEC /* AddBudgetScreen.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		4B116E4A2E22EA0600B45CEC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4B116E4B2E22EA1D00B45CEC /* String+Extensions.swift */,
+				4B116E502E2405A100B45CEC /* Budget+extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4B116E4D2E23F3C800B45CEC /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				4B116E4E2E23F3DE00B45CEC /* BudgetManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		4B116E522E241A2A00B45CEC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4B116E532E241A4700B45CEC /* BudgetCardView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4B116E552E24227D00B45CEC /* IconPicker */ = {
+			isa = PBXGroup;
+			children = (
+				4B116E572E2422E900B45CEC /* DataModel.swift */,
+				4B116E592E24294A00B45CEC /* IconPickerStyle.swift */,
+				4B116E5B2E242CD300B45CEC /* IconPicker.swift */,
+				4B116E5D2E242E6900B45CEC /* CV.swift */,
+			);
+			path = IconPicker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,9 +329,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B116E342E22BF8400B45CEC /* ContentView.swift in Sources */,
+				4B116E512E2405A100B45CEC /* Budget+extensions.swift in Sources */,
+				4B116E492E22E5C700B45CEC /* AddBudgetScreen.swift in Sources */,
+				4B116E5C2E242CD300B45CEC /* IconPicker.swift in Sources */,
+				4B116E4C2E22EA1D00B45CEC /* String+Extensions.swift in Sources */,
+				4B116E472E22C64C00B45CEC /* BudgetListScreen.swift in Sources */,
+				4B116E4F2E23F3DE00B45CEC /* BudgetManager.swift in Sources */,
+				4B116E582E2422E900B45CEC /* DataModel.swift in Sources */,
 				4B116E352E22BF8400B45CEC /* Persistence.swift in Sources */,
+				4B116E5E2E242E6900B45CEC /* CV.swift in Sources */,
+				4B116E542E241A4700B45CEC /* BudgetCardView.swift in Sources */,
 				4B116E362E22BF8400B45CEC /* Qoop.xcdatamodeld in Sources */,
+				4B116E5A2E24294A00B45CEC /* IconPickerStyle.swift in Sources */,
 				4B116E372E22BF8400B45CEC /* QoopApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,7 +13,7 @@ struct QoopApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            BudgetListScreen()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

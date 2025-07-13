@@ -9,14 +9,19 @@ import CoreData
 
 struct PersistenceController {
     static let shared = PersistenceController()
-
+    
     @MainActor
     static let preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
+        let icons = ["person.circle.fill", "cart.fill", "house.fill", "bell.fill", "star.fill"]
+        
         for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
+            let newBudget = Budget(context: viewContext)
+            newBudget.title = "Test Budget"
+            newBudget.limit = Double.random(in: 100...1000)
+            newBudget.icon = icons.randomElement() ?? "person.circle.fill"
+            newBudget.dateCreated = Date()
         }
         do {
             try viewContext.save()
@@ -28,9 +33,15 @@ struct PersistenceController {
         }
         return result
     }()
-
+    
+    lazy var backgroundContext: NSManagedObjectContext = {
+        let context = container.newBackgroundContext()
+        context.mergePolicy = NSMergeByPropertyStoreTrumpMergePolicy
+        return context
+    }()
+    
     let container: NSPersistentCloudKitContainer
-
+    
     init(inMemory: Bool = false) {
         container = NSPersistentCloudKitContainer(name: "Qoop")
         if inMemory {
@@ -40,7 +51,7 @@ struct PersistenceController {
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-
+                
                 /*
                  Typical reasons for an error here include:
                  * The parent directory does not exist, cannot be created, or disallows writing.
@@ -53,5 +64,8 @@ struct PersistenceController {
             }
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
+        container.viewContext.shouldDeleteInaccessibleFaults = true
+        container.viewContext.transactionAuthor = "app"
+        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }
 }
