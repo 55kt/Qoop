@@ -20,10 +20,11 @@
 		4B116E4F2E23F3DE00B45CEC /* BudgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E4E2E23F3DE00B45CEC /* BudgetManager.swift */; };
 		4B116E512E2405A100B45CEC /* Budget+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E502E2405A100B45CEC /* Budget+extensions.swift */; };
 		4B116E542E241A4700B45CEC /* BudgetCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E532E241A4700B45CEC /* BudgetCardView.swift */; };
-		4B116E582E2422E900B45CEC /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E572E2422E900B45CEC /* DataModel.swift */; };
-		4B116E5A2E24294A00B45CEC /* IconPickerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E592E24294A00B45CEC /* IconPickerStyle.swift */; };
-		4B116E5C2E242CD300B45CEC /* IconPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E5B2E242CD300B45CEC /* IconPicker.swift */; };
-		4B116E5E2E242E6900B45CEC /* CV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E5D2E242E6900B45CEC /* CV.swift */; };
+		4B116E582E2422E900B45CEC /* EmojiDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E572E2422E900B45CEC /* EmojiDataModel.swift */; };
+		4B116E5A2E24294A00B45CEC /* EmojiPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E592E24294A00B45CEC /* EmojiPickerView.swift */; };
+		4B116E5C2E242CD300B45CEC /* EmojiPickerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E5B2E242CD300B45CEC /* EmojiPickerRow.swift */; };
+		4B116E602E25757C00B45CEC /* BudgetDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E5F2E25757C00B45CEC /* BudgetDetailScreen.swift */; };
+		4B116E622E2582E000B45CEC /* ExpenseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E612E2582E000B45CEC /* ExpenseManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,10 +63,11 @@
 		4B116E4E2E23F3DE00B45CEC /* BudgetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetManager.swift; sourceTree = "<group>"; };
 		4B116E502E2405A100B45CEC /* Budget+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Budget+extensions.swift"; sourceTree = "<group>"; };
 		4B116E532E241A4700B45CEC /* BudgetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCardView.swift; sourceTree = "<group>"; };
-		4B116E572E2422E900B45CEC /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
-		4B116E592E24294A00B45CEC /* IconPickerStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconPickerStyle.swift; sourceTree = "<group>"; };
-		4B116E5B2E242CD300B45CEC /* IconPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconPicker.swift; sourceTree = "<group>"; };
-		4B116E5D2E242E6900B45CEC /* CV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CV.swift; sourceTree = "<group>"; };
+		4B116E572E2422E900B45CEC /* EmojiDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiDataModel.swift; sourceTree = "<group>"; };
+		4B116E592E24294A00B45CEC /* EmojiPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPickerView.swift; sourceTree = "<group>"; };
+		4B116E5B2E242CD300B45CEC /* EmojiPickerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPickerRow.swift; sourceTree = "<group>"; };
+		4B116E5F2E25757C00B45CEC /* BudgetDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailScreen.swift; sourceTree = "<group>"; };
+		4B116E612E2582E000B45CEC /* ExpenseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,12 +118,12 @@
 		4B116E322E22BF8400B45CEC /* Qoop */ = {
 			isa = PBXGroup;
 			children = (
-				4B116E552E24227D00B45CEC /* IconPicker */,
 				4B116E312E22BF8400B45CEC /* QoopApp.swift */,
+				4B116E452E22C5B400B45CEC /* Screens */,
 				4B116E522E241A2A00B45CEC /* Views */,
 				4B116E4D2E23F3C800B45CEC /* Managers */,
 				4B116E4A2E22EA0600B45CEC /* Extensions */,
-				4B116E452E22C5B400B45CEC /* Screens */,
+				4B116E552E24227D00B45CEC /* EmojiPicker */,
 				4B116E2E2E22BF8400B45CEC /* Persistence.swift */,
 				4B116E2B2E22BF8400B45CEC /* Assets.xcassets */,
 				4B116E2D2E22BF8400B45CEC /* Info.plist */,
@@ -153,6 +155,7 @@
 			children = (
 				4B116E462E22C64C00B45CEC /* BudgetListScreen.swift */,
 				4B116E482E22E5C700B45CEC /* AddBudgetScreen.swift */,
+				4B116E5F2E25757C00B45CEC /* BudgetDetailScreen.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -170,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				4B116E4E2E23F3DE00B45CEC /* BudgetManager.swift */,
+				4B116E612E2582E000B45CEC /* ExpenseManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -182,15 +186,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		4B116E552E24227D00B45CEC /* IconPicker */ = {
+		4B116E552E24227D00B45CEC /* EmojiPicker */ = {
 			isa = PBXGroup;
 			children = (
-				4B116E572E2422E900B45CEC /* DataModel.swift */,
-				4B116E592E24294A00B45CEC /* IconPickerStyle.swift */,
-				4B116E5B2E242CD300B45CEC /* IconPicker.swift */,
-				4B116E5D2E242E6900B45CEC /* CV.swift */,
+				4B116E572E2422E900B45CEC /* EmojiDataModel.swift */,
+				4B116E592E24294A00B45CEC /* EmojiPickerView.swift */,
+				4B116E5B2E242CD300B45CEC /* EmojiPickerRow.swift */,
 			);
-			path = IconPicker;
+			path = EmojiPicker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -331,16 +334,17 @@
 			files = (
 				4B116E512E2405A100B45CEC /* Budget+extensions.swift in Sources */,
 				4B116E492E22E5C700B45CEC /* AddBudgetScreen.swift in Sources */,
-				4B116E5C2E242CD300B45CEC /* IconPicker.swift in Sources */,
+				4B116E5C2E242CD300B45CEC /* EmojiPickerRow.swift in Sources */,
 				4B116E4C2E22EA1D00B45CEC /* String+Extensions.swift in Sources */,
+				4B116E602E25757C00B45CEC /* BudgetDetailScreen.swift in Sources */,
 				4B116E472E22C64C00B45CEC /* BudgetListScreen.swift in Sources */,
 				4B116E4F2E23F3DE00B45CEC /* BudgetManager.swift in Sources */,
-				4B116E582E2422E900B45CEC /* DataModel.swift in Sources */,
+				4B116E582E2422E900B45CEC /* EmojiDataModel.swift in Sources */,
+				4B116E622E2582E000B45CEC /* ExpenseManager.swift in Sources */,
 				4B116E352E22BF8400B45CEC /* Persistence.swift in Sources */,
-				4B116E5E2E242E6900B45CEC /* CV.swift in Sources */,
 				4B116E542E241A4700B45CEC /* BudgetCardView.swift in Sources */,
 				4B116E362E22BF8400B45CEC /* Qoop.xcdatamodeld in Sources */,
-				4B116E5A2E24294A00B45CEC /* IconPickerStyle.swift in Sources */,
+				4B116E5A2E24294A00B45CEC /* EmojiPickerView.swift in Sources */,
 				4B116E372E22BF8400B45CEC /* QoopApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

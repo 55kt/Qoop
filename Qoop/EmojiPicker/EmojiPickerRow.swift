@@ -1,5 +1,5 @@
 //
-//  IconPicker.swift
+//  EmojiPicker.swift
 //  Qoop
 //
 //  Created by Vlad on 13/7/25.
@@ -7,22 +7,20 @@
 
 import SwiftUI
 
-struct IconPicker: View {
-    @State private var showIconView = false
-    @State private var colors = false
+struct EmojiPickerRow: View {
+    @State private var showEmojiView = false
     var title: String
     @Binding var selection: String
     
     
     var body: some View {
         Button {
-            showIconView.toggle()
+            showEmojiView.toggle()
         } label: {
             HStack {
                 Text(title)
                 Spacer()
-                Image(systemName: selection)
-                    .renderingMode(colors ? .original : .template)
+                Text(selection)
                     .font(.title)
             }
             .padding(.horizontal)
@@ -31,9 +29,13 @@ struct IconPicker: View {
             .frame(width: 300, height: 55)
             .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 15))
         }
-        .sheet(isPresented: $showIconView) {
-            IconPickerStyle(selectedIcon: $selection, color: $colors)
+        .sheet(isPresented: $showEmojiView) {
+            EmojiPickerView(selectedEmoji: $selection)
         }
-
+        
     }
+}
+
+#Preview {
+    EmojiPickerRow(title: "Select an icon", selection: .constant(""))
 }

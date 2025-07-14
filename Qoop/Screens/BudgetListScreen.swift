@@ -16,7 +16,11 @@ struct BudgetListScreen: View {
     var body: some View {
         NavigationStack {
             List(budgets) { budget in
-                BudgetCardView(budget: budget)
+                NavigationLink {
+                    BudgetDetailScreen(budget: budget)
+                } label: {
+                    BudgetCardView(budget: budget)
+                }
             }
             .navigationTitle("Budgets")
             .toolbar {

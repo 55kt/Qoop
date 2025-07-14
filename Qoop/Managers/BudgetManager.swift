@@ -9,7 +9,8 @@ import Foundation
 import CoreData
 
 final class BudgetManager {
-    static func addBudget(title: String, limit: Double, icon: String, context: NSManagedObjectContext) throws {
+    static func addBudget(title: String, limit: Double, emoji: String, context: NSManagedObjectContext) throws {
+        
         guard !Budget.exists(context: context, title: title) else {
             throw NSError(domain: "Qoop", code: -1, userInfo: [NSLocalizedDescriptionKey: "Budget title already exists"])
         }
@@ -17,7 +18,7 @@ final class BudgetManager {
         let newBudget = Budget(context: context)
         newBudget.title = title
         newBudget.limit = limit
-        newBudget.icon = icon
+        newBudget.emoji = emoji
         newBudget.dateCreated = Date()
         
         do {
@@ -33,14 +34,14 @@ final class BudgetManager {
         try context.save()
     }
     
-    static func updateBudget(_ budget: Budget, newTitle: String, newLimit: Double, newIcon: String, context: NSManagedObjectContext) throws {
+    static func updateBudget(_ budget: Budget, newTitle: String, newLimit: Double, newEmoji: String, context: NSManagedObjectContext) throws {
         guard !Budget.exists(context: context, title: newTitle) || budget.title == newTitle else {
             throw NSError(domain: "Qoop", code: -1, userInfo: [NSLocalizedDescriptionKey: "Budget title already exists"])
         }
         
         budget.title = newTitle
         budget.limit = newLimit
-        budget.icon = newIcon
+        budget.emoji = newEmoji
         try context.save()
     }
 }

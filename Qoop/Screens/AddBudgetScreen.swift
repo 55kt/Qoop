@@ -13,7 +13,7 @@ struct AddBudgetScreen: View {
     
     @State private var title: String = ""
     @State private var limit: Double?
-    @State private var icon: String = "person.circle.fill"
+    @State private var emoji: String = "💸"
     
     @State private var errorMessage: String?
     
@@ -29,14 +29,15 @@ struct AddBudgetScreen: View {
                 
                 Spacer()
                 
-                Image(systemName: icon)
-                    .resizable()
-                    .frame(width: 30, height: 30)
+                Text(emoji)
+                    .font(.largeTitle)
             }
             
             TextField("Title", text: $title)
             TextField("Limit", value: $limit, format: .number)
                 .keyboardType(.numberPad)
+            
+            EmojiPickerRow(title: "Select emoji", selection: $emoji)
             
             if let error = errorMessage {
                 Text(error)
@@ -45,7 +46,7 @@ struct AddBudgetScreen: View {
             
             Button("Save") {
                 do {
-                    try BudgetManager.addBudget(title: title, limit: limit ?? 0, icon: "person.circle.fill", context: viewContext)
+                    try BudgetManager.addBudget(title: title, limit: limit ?? 0, emoji: emoji, context: viewContext)
                     print("✅ Budget \(title) with limit \(limit ?? 0) saved successfully")
                     dismiss()
                 } catch let error as NSError {
@@ -55,7 +56,6 @@ struct AddBudgetScreen: View {
             }
             .frame(maxWidth: .infinity)
             .disabled(!isFormValid)
-            
         }
     }
 }
