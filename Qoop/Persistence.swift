@@ -16,12 +16,6 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         
-        let newBudget = Budget(context: viewContext)
-        newBudget.title = "Test Budget"
-        newBudget.limit = Double.random(in: 100...1000)
-        newBudget.emoji = emojiData.emoji["money_with_wings"] ?? EmojiDataModel.defaultEmoji
-        newBudget.dateCreated = Date()
-        
         let groceries = Budget(context: viewContext)
         groceries.title = "Groceries"
         groceries.limit = 200
@@ -34,29 +28,22 @@ struct PersistenceController {
         entertainment.emoji = emojiData.emoji["film"] ?? EmojiDataModel.defaultEmoji
         entertainment.dateCreated = Date()
         
-        let travel = Budget(context: viewContext)
-        travel.title = "Travel"
-        travel.limit = 500
-        travel.emoji = emojiData.emoji["airplane"] ?? EmojiDataModel.defaultEmoji
-        travel.dateCreated = Date()
+        let milk = Expense(context: viewContext)
+        milk.title = "Milk"
+        milk.amount = 3.49
+        milk.quantity = 2
+        milk.emoji = emojiData.emoji["milk"] ?? EmojiDataModel.defaultEmoji
+        milk.dateCreated = Date()
         
-        let car = Budget(context: viewContext)
-        car.title = "Car"
-        car.limit = 1000
-        car.emoji = emojiData.emoji["car"] ?? EmojiDataModel.defaultEmoji
-        car.dateCreated = Date()
+        let cookies = Expense(context: viewContext)
+        cookies.title = "Cookies"
+        cookies.quantity = 3
+        cookies.amount = 2.99
+        cookies.emoji = emojiData.emoji["cookie"] ?? EmojiDataModel.defaultEmoji
+        cookies.dateCreated = Date()
         
-        let health = Budget(context: viewContext)
-        health.title = "Health"
-        health.limit = 500
-        health.emoji = emojiData.emoji["heart"] ?? EmojiDataModel.defaultEmoji
-        health.dateCreated = Date()
-        
-        let food = Budget(context: viewContext)
-        food.title = "Food"
-        food.limit = 100
-        food.emoji = emojiData.emoji["fork_and_knife"] ?? EmojiDataModel.defaultEmoji
-        food.dateCreated = Date()
+        entertainment.addToExpenses(cookies)
+        entertainment.addToExpenses(milk)
         
         do {
             try viewContext.save()
