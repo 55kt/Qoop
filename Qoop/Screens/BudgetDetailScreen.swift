@@ -18,6 +18,8 @@ struct BudgetDetailScreen: View {
     @State private var location: String = ""
     @State private var emoji: String = "💸"
     
+    @State private var errorMessage: String = ""
+    
     @State private var expenseToEdit: Expense?
     
     @FetchRequest(sortDescriptors: []) private var expenses: FetchedResults<Expense>
@@ -33,6 +35,31 @@ struct BudgetDetailScreen: View {
     }
     
     
+    
+    private func addExpense() {
+        let expense = Expense(context: viewContext)
+        expense.title = title
+        expense.amount = amount ?? 0
+        expense.quantity = Int16(quantity ?? 0)
+        expense.location = location
+        expense.emoji = emoji
+        expense.dateCreated = Date()
+        
+        budget.addToExpenses(expense)
+        
+        do {
+            try viewContext.save()
+            title = ""
+            amount = nil
+            quantity = nil
+            location = ""
+            emoji = ""
+            errorMessage = ""
+        } catch {
+            viewContext.rollback()
+            print("❌ Failed to save expense: \(error.localizedDescription)")
+        }
+    }
     
     private func deleteExpense(_ indexSet: IndexSet) {
         indexSet.forEach { index in
@@ -61,22 +88,19 @@ struct BudgetDetailScreen: View {
                 EmojiPickerRow(title: "Select emoji", selection: $emoji)
                 
                 Button {
-                    guard let unwrappedAmount = amount, unwrappedAmount > 0 else { return }
-                    do {
-                        try ExpenseManager.addExpense(title: title, amount: unwrappedAmount, quantity: quantity, emoji: emoji, location: location, budget: budget, context: viewContext)
-                        title = ""
-                        amount = nil
-                        emoji = "💸"
-                        quantity = nil
-                        location = ""
-                    } catch {
-                        print("❌ Failed to save expense: \(error.localizedDescription)")
+                    if !Expense.exists(context: viewContext, title: title, budget: budget) {
+                        addExpense()
+                    } else {
+                        print("❌ Expense with title \(title) already exists")
+                        errorMessage = "❌ Expense with title \(title) already exists"
                     }
                 } label: {
                     Text("Save")
                 }
                 .frame(maxWidth: .infinity)
                 .disabled(!isFormValid)
+                
+                Text(errorMessage)
             }
             
             Section("Expenses") {

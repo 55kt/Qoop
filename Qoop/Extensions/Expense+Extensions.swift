@@ -15,16 +15,13 @@ extension Expense {
     }
     
     static func exists(context: NSManagedObjectContext, title: String, budget: Budget) -> Bool {
-        
         let request = Expense.fetchRequest()
         request.predicate = NSPredicate(format: "title == %@ AND budget == %@", title, budget)
-        
         do {
             let results = try context.fetch(request)
             return !results.isEmpty
-        } catch  {
+        } catch {
             return false
         }
-        
     }
 }
