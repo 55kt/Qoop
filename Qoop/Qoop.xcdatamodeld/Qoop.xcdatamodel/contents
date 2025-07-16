@@ -11,6 +11,7 @@
         <attribute name="amount" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="dateCreated" attributeType="Date" defaultDateTimeInterval="774206460" usesScalarValueType="NO"/>
         <attribute name="emoji" attributeType="String" defaultValueString=""/>
+        <attribute name="location" attributeType="String" defaultValueString=""/>
         <attribute name="quantity" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" attributeType="String" defaultValueString=""/>
         <relationship name="budget" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Budget" inverseName="expenses" inverseEntity="Budget"/>

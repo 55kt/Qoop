@@ -9,11 +9,7 @@ import SwiftUI
 
 struct ExpenseCardView: View {
     
-    let expense: Expense
-    
-    @State private var title: String = ""
-    @State private var amount: Double?
-    @State private var emoji: String = "💸"
+    @ObservedObject var expense: Expense
     
     var body: some View {
         VStack {
@@ -34,7 +30,18 @@ struct ExpenseCardView: View {
                 Spacer()
             }
             .font(.caption)
+            
+            HStack(spacing: 3) {
+                Image(systemName: "location.circle")
+                Text("Purchase location: \(expense.location ?? "")")
+                
+                Spacer()
+                    
+            }
+            .font(.caption)
+            .foregroundColor(.secondary)
         }
+        .contentShape(Rectangle())
     }
 }
 

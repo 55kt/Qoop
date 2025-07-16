@@ -28,6 +28,7 @@
 		4B116E642E26A52800B45CEC /* Locale+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E632E26A52800B45CEC /* Locale+Extensions.swift */; };
 		4B116E662E26A7C300B45CEC /* ExpenseCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E652E26A7C300B45CEC /* ExpenseCardView.swift */; };
 		4B116E682E26A8A300B45CEC /* Expense+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E672E26A8A300B45CEC /* Expense+Extensions.swift */; };
+		4B116E6A2E27F9FD00B45CEC /* EditExpenseScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E692E27F9FD00B45CEC /* EditExpenseScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		4B116E632E26A52800B45CEC /* Locale+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Locale+Extensions.swift"; sourceTree = "<group>"; };
 		4B116E652E26A7C300B45CEC /* ExpenseCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseCardView.swift; sourceTree = "<group>"; };
 		4B116E672E26A8A300B45CEC /* Expense+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+Extensions.swift"; sourceTree = "<group>"; };
+		4B116E692E27F9FD00B45CEC /* EditExpenseScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExpenseScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 				4B116E462E22C64C00B45CEC /* BudgetListScreen.swift */,
 				4B116E482E22E5C700B45CEC /* AddBudgetScreen.swift */,
 				4B116E5F2E25757C00B45CEC /* BudgetDetailScreen.swift */,
+				4B116E692E27F9FD00B45CEC /* EditExpenseScreen.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B116E6A2E27F9FD00B45CEC /* EditExpenseScreen.swift in Sources */,
 				4B116E512E2405A100B45CEC /* Budget+Extensions.swift in Sources */,
 				4B116E492E22E5C700B45CEC /* AddBudgetScreen.swift in Sources */,
 				4B116E5C2E242CD300B45CEC /* EmojiPickerRow.swift in Sources */,

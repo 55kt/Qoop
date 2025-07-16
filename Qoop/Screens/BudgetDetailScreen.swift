@@ -15,7 +15,10 @@ struct BudgetDetailScreen: View {
     @State private var title: String = ""
     @State private var amount: Double?
     @State private var quantity: Int?
+    @State private var location: String = ""
     @State private var emoji: String = "💸"
+    
+    @State private var expenseToEdit: Expense?
     
     @FetchRequest(sortDescriptors: []) private var expenses: FetchedResults<Expense>
     
@@ -23,12 +26,13 @@ struct BudgetDetailScreen: View {
         
         self.budget = budget
         _expenses = FetchRequest(sortDescriptors: [], predicate: NSPredicate(format: "budget == %@", budget))
-        
     }
     
     private var isFormValid: Bool {
         !title.isEmptyOrWhitespace && amount != nil && Double(amount!) > 0 && quantity != nil && Int(quantity!) > 0
     }
+    
+    
     
     private func deleteExpense(_ indexSet: IndexSet) {
         indexSet.forEach { index in
@@ -52,17 +56,19 @@ struct BudgetDetailScreen: View {
                 TextField("Amount", value: $amount, format: .number)
                     .keyboardType(.numberPad)
                 TextField("Quantity", value: $quantity, format: .number)
+                TextField("Location", text: $location)
                 
                 EmojiPickerRow(title: "Select emoji", selection: $emoji)
                 
                 Button {
                     guard let unwrappedAmount = amount, unwrappedAmount > 0 else { return }
                     do {
-                        try ExpenseManager.addExpense(title: title, amount: unwrappedAmount, quantity: quantity, emoji: emoji, budget: budget, context: viewContext)
+                        try ExpenseManager.addExpense(title: title, amount: unwrappedAmount, quantity: quantity, emoji: emoji, location: location, budget: budget, context: viewContext)
                         title = ""
                         amount = nil
                         emoji = "💸"
                         quantity = nil
+                        location = ""
                     } catch {
                         print("❌ Failed to save expense: \(error.localizedDescription)")
                     }
@@ -85,11 +91,19 @@ struct BudgetDetailScreen: View {
                 
                 ForEach(expenses) { expense in
                     ExpenseCardView(expense: expense)
+                        .onLongPressGesture {
+                            expenseToEdit = expense
+                        }
                 }
                 .onDelete(perform: deleteExpense)
             }
         }
         .navigationTitle(budget.title ?? "")
+        .sheet(item: $expenseToEdit) { expenseToEdit in
+            NavigationStack {
+                EditExpenseScreen(expense: expenseToEdit)
+            }
+        }
     }
 }
 
