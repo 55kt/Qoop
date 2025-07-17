@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct AddBudgetScreen: View {
+    
+    // MARK: - Properties
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     
@@ -21,8 +23,10 @@ struct AddBudgetScreen: View {
         !title.isEmptyOrWhitespace && limit != nil && Double(limit!) > 0
     }
     
+    // MARK: - Body
     var body: some View {
         Form {
+            
             HStack {
                 Text("New Budget")
                     .font(.title)
@@ -31,7 +35,7 @@ struct AddBudgetScreen: View {
                 
                 Text(emoji)
                     .font(.largeTitle)
-            }
+            }// HStack
             
             TextField("Title", text: $title)
             TextField("Limit", value: $limit, format: .number)
@@ -42,7 +46,7 @@ struct AddBudgetScreen: View {
             if let error = errorMessage {
                 Text(error)
                     .foregroundStyle(.red)
-            }
+            }// if let error
             
             Button("Save") {
                 do {
@@ -52,17 +56,22 @@ struct AddBudgetScreen: View {
                 } catch let error as NSError {
                     errorMessage = "❌ Failed to save budget \(title): \(error.localizedDescription)"
                     print("❌ \(errorMessage!)")
-                }
-            }
+                }// do - catch
+            }// Save button
             .frame(maxWidth: .infinity)
             .disabled(!isFormValid)
-        }
-    }
-}
+        }// Form
+    }// View
+    
+    // MARK: - Methods & Functions
+    
+    
+}// body
 
+// MARK: - Preview
 #Preview {
     let preview = PersistenceController.preview
-        let context = preview.container.viewContext
-        return AddBudgetScreen()
-            .environment(\.managedObjectContext, context)
+    let context = preview.container.viewContext
+    return AddBudgetScreen()
+        .environment(\.managedObjectContext, context)
 }

@@ -8,16 +8,18 @@
 import SwiftUI
 
 struct BudgetCardView: View {
+    // MARK: - Properties
     let budget: Budget
     
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(spacing: 15) {
                 Text(budget.emoji ?? EmojiDataModel.defaultEmoji)
-                    .font(.system(size: 50))
+                    .font(.system(size: 80))
                 VStack(alignment: .leading, spacing: 5) {
                     Text(budget.title ?? "")
-                        .font(.headline)
+                        .font(.title)
                     Text(budget.limit, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                         .font(.subheadline)
                     HStack {
@@ -26,17 +28,15 @@ struct BudgetCardView: View {
                         Text(budget.dateCreated ?? Date(), style: .date)
                             .font(.caption)
                         Spacer()
-                    }
-                }
-            }
-        }
-        .padding()
-        .background(Color(.systemBackground).opacity(0.9))
-        .cornerRadius(15)
-        .shadow(radius: 5)
-    }
-}
+                    }// HStack
+                }// VStack
+            }// HStack
+        }// VStack
+        .shadow(radius: 1)
+    }// View
+}// View
 
+// MARK: - Preview
 #Preview {
     BudgetCardView(budget: Budget(context: PersistenceController.preview.container.viewContext))
 }

@@ -29,6 +29,7 @@
 		4B116E662E26A7C300B45CEC /* ExpenseCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E652E26A7C300B45CEC /* ExpenseCardView.swift */; };
 		4B116E682E26A8A300B45CEC /* Expense+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E672E26A8A300B45CEC /* Expense+Extensions.swift */; };
 		4B116E6A2E27F9FD00B45CEC /* EditExpenseScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E692E27F9FD00B45CEC /* EditExpenseScreen.swift */; };
+		4B116E6C2E293CE200B45CEC /* AddExpenseScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E6B2E293CE200B45CEC /* AddExpenseScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		4B116E652E26A7C300B45CEC /* ExpenseCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseCardView.swift; sourceTree = "<group>"; };
 		4B116E672E26A8A300B45CEC /* Expense+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+Extensions.swift"; sourceTree = "<group>"; };
 		4B116E692E27F9FD00B45CEC /* EditExpenseScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExpenseScreen.swift; sourceTree = "<group>"; };
+		4B116E6B2E293CE200B45CEC /* AddExpenseScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,9 +164,10 @@
 			isa = PBXGroup;
 			children = (
 				4B116E462E22C64C00B45CEC /* BudgetListScreen.swift */,
-				4B116E482E22E5C700B45CEC /* AddBudgetScreen.swift */,
 				4B116E5F2E25757C00B45CEC /* BudgetDetailScreen.swift */,
+				4B116E482E22E5C700B45CEC /* AddBudgetScreen.swift */,
 				4B116E692E27F9FD00B45CEC /* EditExpenseScreen.swift */,
+				4B116E6B2E293CE200B45CEC /* AddExpenseScreen.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -351,6 +354,7 @@
 				4B116E4C2E22EA1D00B45CEC /* String+Extensions.swift in Sources */,
 				4B116E602E25757C00B45CEC /* BudgetDetailScreen.swift in Sources */,
 				4B116E472E22C64C00B45CEC /* BudgetListScreen.swift in Sources */,
+				4B116E6C2E293CE200B45CEC /* AddExpenseScreen.swift in Sources */,
 				4B116E682E26A8A300B45CEC /* Expense+Extensions.swift in Sources */,
 				4B116E4F2E23F3DE00B45CEC /* BudgetManager.swift in Sources */,
 				4B116E582E2422E900B45CEC /* EmojiDataModel.swift in Sources */,

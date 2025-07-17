@@ -9,8 +9,10 @@ import SwiftUI
 
 struct ExpenseCardView: View {
     
+    // MARK: - Properties
     @ObservedObject var expense: Expense
     
+    // MARK: - Body
     var body: some View {
         VStack {
             HStack {
@@ -22,13 +24,13 @@ struct ExpenseCardView: View {
                 VStack(alignment: .trailing) {
                     Text("One item price \(expense.amount, format: .currency(code: Locale.currencyCode))")
                     Text("Total price \(expense.total, format: .currency(code: Locale.currencyCode))")
-                }
-            }
+                }// VStack
+            }// Hstack
             HStack {
                 Text("Created:")
                 Text(expense.dateCreated ?? Date(), style: .date)
                 Spacer()
-            }
+            }// HStack
             .font(.caption)
             
             HStack(spacing: 3) {
@@ -37,15 +39,15 @@ struct ExpenseCardView: View {
                 
                 Spacer()
                     
-            }
+            }// Hstack
             .font(.caption)
             .foregroundColor(.secondary)
-        }
+        }// VStack
         .contentShape(Rectangle())
-    }
-}
+    }// body
+}// View
 
-
+// MARK: - Preview Container
 struct ExpenseCellViewContainer: View {
     
     @FetchRequest(sortDescriptors: []) private var expenses: FetchedResults<Expense>
