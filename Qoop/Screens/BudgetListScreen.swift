@@ -34,7 +34,7 @@ struct BudgetListScreen: View {
                     }// NavigationLink
                 }// ForEach
                 .onDelete { indexSet in
-                    viewModel.deleteBudgets(offsets: indexSet, budgets: budgets, context: viewContext)
+                    viewModel.deleteBudget(offsets: indexSet, budgets: budgets, context: viewContext)
                 }
                 .listRowBackground(Color.clear)
             }// List
@@ -42,13 +42,16 @@ struct BudgetListScreen: View {
             .navigationTitle("Budgets")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Add budget") {
+                    Button {
                         isPresented.toggle()
+                    } label: {
+                        Image(systemName: "plus")
                     }
+
                 }
             }// toolbar
             .sheet(isPresented: $isPresented) {
-                AddBudgetScreen()
+                AddBudgetScreen(viewModel: viewModel, isPresented: $isPresented)
                     .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
                     .presentationDetents([.fraction(0.50)])
             }// sheet

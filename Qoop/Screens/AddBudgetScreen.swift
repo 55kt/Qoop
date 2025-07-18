@@ -13,6 +13,9 @@ struct AddBudgetScreen: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     
+    @ObservedObject var viewModel: BudgetViewModel
+    @Binding var isPresented: Bool
+    
     @State private var title: String = ""
     @State private var limit: Double?
     @State private var emoji: String = "💸"
@@ -25,42 +28,56 @@ struct AddBudgetScreen: View {
     
     // MARK: - Body
     var body: some View {
-        Form {
-            
-            HStack {
-                Text("New Budget")
-                    .font(.title)
+        NavigationStack {
+            Form {
+                HStack {
+                    Text("New Budget")
+                        .font(.title)
+                    
+                    Spacer()
+                    
+                    Text(emoji)
+                        .font(.largeTitle)
+                }// HStack
                 
-                Spacer()
+                TextField("Title", text: $title)
+                TextField("Limit", value: $limit, format: .number)
+                    .keyboardType(.numberPad)
                 
-                Text(emoji)
-                    .font(.largeTitle)
-            }// HStack
-            
-            TextField("Title", text: $title)
-            TextField("Limit", value: $limit, format: .number)
-                .keyboardType(.numberPad)
-            
-            EmojiPickerRow(title: "Select emoji", selection: $emoji)
-            
-            if let error = errorMessage {
-                Text(error)
-                    .foregroundStyle(.red)
-            }// if let error
-            
-            Button("Save") {
-                do {
-                    try BudgetViewModel.addBudget(title: title, limit: limit ?? 0, emoji: emoji, context: viewContext)
-                    print("✅ Budget \(title) with limit \(limit ?? 0) saved successfully")
-                    dismiss()
-                } catch let error as NSError {
-                    errorMessage = "❌ Failed to save budget \(title): \(error.localizedDescription)"
-                    print("❌ \(errorMessage!)")
-                }// do - catch
-            }// Save button
-            .frame(maxWidth: .infinity)
-            .disabled(!isFormValid)
-        }// Form
+                EmojiPickerRow(title: "Select emoji", selection: $emoji)
+                
+                if let error = errorMessage {
+                    Text(error)
+                        .foregroundStyle(.red)
+                }// if let error
+                
+                Button("Save") {
+                    guard let unwrappedLimit = limit else { return }
+                    
+                    viewModel.addBudget(
+                        title: title,
+                        limit: unwrappedLimit,
+                        emoji: emoji,
+                        context: viewContext
+                    )
+                    
+                    if !viewModel.showErrorAlert {
+                        isPresented = false
+                    }
+                }// save button
+                .disabled(!isFormValid)
+                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity)
+                .disabled(!isFormValid)
+            }// Form
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
+            }
+        }// NavigationStack
     }// View
 }// body
 
@@ -68,6 +85,8 @@ struct AddBudgetScreen: View {
 #Preview {
     let preview = PersistenceController.preview
     let context = preview.container.viewContext
-    return AddBudgetScreen()
+    let viewModel = BudgetViewModel()
+    @State var isPresented = true
+    return AddBudgetScreen(viewModel: viewModel, isPresented: $isPresented)
         .environment(\.managedObjectContext, context)
 }
