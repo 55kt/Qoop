@@ -17,7 +17,7 @@
 		4B116E472E22C64C00B45CEC /* BudgetListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E462E22C64C00B45CEC /* BudgetListScreen.swift */; };
 		4B116E492E22E5C700B45CEC /* AddBudgetScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E482E22E5C700B45CEC /* AddBudgetScreen.swift */; };
 		4B116E4C2E22EA1D00B45CEC /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E4B2E22EA1D00B45CEC /* String+Extensions.swift */; };
-		4B116E4F2E23F3DE00B45CEC /* BudgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E4E2E23F3DE00B45CEC /* BudgetManager.swift */; };
+		4B116E4F2E23F3DE00B45CEC /* BudgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E4E2E23F3DE00B45CEC /* BudgetViewModel.swift */; };
 		4B116E512E2405A100B45CEC /* Budget+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E502E2405A100B45CEC /* Budget+Extensions.swift */; };
 		4B116E542E241A4700B45CEC /* BudgetCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E532E241A4700B45CEC /* BudgetCardView.swift */; };
 		4B116E582E2422E900B45CEC /* EmojiDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E572E2422E900B45CEC /* EmojiDataModel.swift */; };
@@ -65,7 +65,7 @@
 		4B116E462E22C64C00B45CEC /* BudgetListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetListScreen.swift; sourceTree = "<group>"; };
 		4B116E482E22E5C700B45CEC /* AddBudgetScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBudgetScreen.swift; sourceTree = "<group>"; };
 		4B116E4B2E22EA1D00B45CEC /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
-		4B116E4E2E23F3DE00B45CEC /* BudgetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetManager.swift; sourceTree = "<group>"; };
+		4B116E4E2E23F3DE00B45CEC /* BudgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewModel.swift; sourceTree = "<group>"; };
 		4B116E502E2405A100B45CEC /* Budget+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Budget+Extensions.swift"; sourceTree = "<group>"; };
 		4B116E532E241A4700B45CEC /* BudgetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCardView.swift; sourceTree = "<group>"; };
 		4B116E572E2422E900B45CEC /* EmojiDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiDataModel.swift; sourceTree = "<group>"; };
@@ -186,7 +186,7 @@
 		4B116E4D2E23F3C800B45CEC /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				4B116E4E2E23F3DE00B45CEC /* BudgetManager.swift */,
+				4B116E4E2E23F3DE00B45CEC /* BudgetViewModel.swift */,
 				4B116E612E2582E000B45CEC /* ExpenseManager.swift */,
 			);
 			path = Managers;
@@ -356,7 +356,7 @@
 				4B116E472E22C64C00B45CEC /* BudgetListScreen.swift in Sources */,
 				4B116E6C2E293CE200B45CEC /* AddExpenseScreen.swift in Sources */,
 				4B116E682E26A8A300B45CEC /* Expense+Extensions.swift in Sources */,
-				4B116E4F2E23F3DE00B45CEC /* BudgetManager.swift in Sources */,
+				4B116E4F2E23F3DE00B45CEC /* BudgetViewModel.swift in Sources */,
 				4B116E582E2422E900B45CEC /* EmojiDataModel.swift in Sources */,
 				4B116E622E2582E000B45CEC /* ExpenseManager.swift in Sources */,
 				4B116E352E22BF8400B45CEC /* Persistence.swift in Sources */,

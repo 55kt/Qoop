@@ -50,7 +50,7 @@ struct AddBudgetScreen: View {
             
             Button("Save") {
                 do {
-                    try BudgetManager.addBudget(title: title, limit: limit ?? 0, emoji: emoji, context: viewContext)
+                    try BudgetViewModel.addBudget(title: title, limit: limit ?? 0, emoji: emoji, context: viewContext)
                     print("✅ Budget \(title) with limit \(limit ?? 0) saved successfully")
                     dismiss()
                 } catch let error as NSError {
@@ -62,10 +62,6 @@ struct AddBudgetScreen: View {
             .disabled(!isFormValid)
         }// Form
     }// View
-    
-    // MARK: - Methods & Functions
-    
-    
 }// body
 
 // MARK: - Preview

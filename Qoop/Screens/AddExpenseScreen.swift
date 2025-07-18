@@ -37,7 +37,22 @@ struct AddExpenseScreen: View {
                 
                 Button {
                     if !Expense.exists(context: viewContext, title: title, budget: budget) {
-                        addExpense()
+                        guard let unwrappedAmount = amount, let unwrappedQuantity = quantity else {
+                            errorMessage = "❌ Amount or quantity is missing"
+                            return
+                        }
+                        do {
+                            try ExpenseManager.addExpense(title: title, amount: unwrappedAmount, quantity: unwrappedQuantity, emoji: emoji, location: location, budget: budget, context: viewContext)
+                            title = ""
+                            amount = nil
+                            quantity = nil
+                            location = ""
+                            emoji = "💸"
+                            errorMessage = ""
+                        } catch {
+                            print("❌ Failed to save expense: \(error.localizedDescription)")
+                            errorMessage = "❌ Failed to save expense: \(error.localizedDescription)"
+                        }
                     } else {
                         print("❌ Expense with title \(title) already exists")
                         errorMessage = "❌ Expense with title \(title) already exists"
@@ -52,32 +67,6 @@ struct AddExpenseScreen: View {
             }// Section
         }// Form
     }// View
-    
-    // MARK: - Methods & Functions
-    private func addExpense() {
-        let expense = Expense(context: viewContext)
-        expense.title = title
-        expense.amount = amount ?? 0
-        expense.quantity = Int16(quantity ?? 0)
-        expense.location = location
-        expense.emoji = emoji
-        expense.dateCreated = Date()
-        
-        budget.addToExpenses(expense)
-        
-        do {
-            try viewContext.save()
-            title = ""
-            amount = nil
-            quantity = nil
-            location = ""
-            emoji = ""
-            errorMessage = ""
-        } catch {
-            viewContext.rollback()
-            print("❌ Failed to save expense: \(error.localizedDescription)")
-        }
-    }// add expense function
 }// View
 
 // MARK: - Preview

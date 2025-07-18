@@ -12,17 +12,30 @@ struct BudgetListScreen: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\Budget.dateCreated, order: .reverse)], animation: .default)
     private var budgets: FetchedResults<Budget>
     
+    @Environment(\.managedObjectContext) private var viewContext
+    
     @State private var isPresented: Bool = false
+    
+    @StateObject private var viewModel = BudgetViewModel()
+    
+    
+    @State private var budgetToEdit: Budget? = nil
+    @State private var showDeleteAlert: Bool = false
     
     // MARK: - Body
     var body: some View {
         NavigationStack {
-            List(budgets) { budget in
-                NavigationLink {
-                    BudgetDetailScreen(budget: budget)
-                } label: {
-                    BudgetCardView(budget: budget)
-                }// NavigationLink
+            List {
+                ForEach(budgets) { budget in
+                    NavigationLink {
+                        BudgetDetailScreen(budget: budget)
+                    } label: {
+                        BudgetCardView(budget: budget)
+                    }// NavigationLink
+                }// ForEach
+                .onDelete { indexSet in
+                    viewModel.deleteBudgets(offsets: indexSet, budgets: budgets, context: viewContext)
+                }
                 .listRowBackground(Color.clear)
             }// List
             .listStyle(.plain)
@@ -42,7 +55,14 @@ struct BudgetListScreen: View {
             .onAppear {
                 print("Budgets: \(budgets.map { $0.title ?? "No title" })")
             }// onAppear
+            
+            
         }// NavigationStack
+        .alert("Error", isPresented: $viewModel.showErrorAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(viewModel.errorMessage ?? "Unknown error")
+        }
     }// Body
 }// View
 

@@ -14,6 +14,7 @@ struct BudgetDetailScreen: View {
     @FetchRequest(sortDescriptors: []) private var expenses: FetchedResults<Expense>
     @Environment(\.managedObjectContext) private var viewContext
     @State private var expenseToEdit: Expense?
+    @State private var addExpensePresented: Bool = false
     
     // MARK: - Initializer
     init(budget: Budget) {
@@ -34,6 +35,11 @@ struct BudgetDetailScreen: View {
                 Spacer()
             }// HStack
             
+            Button("Add expense") {
+                addExpensePresented.toggle()
+            }
+            .frame(maxWidth: .infinity)
+            
             // MARK: - Expenses List
             Section("Expenses") {
                 
@@ -50,9 +56,12 @@ struct BudgetDetailScreen: View {
                 // MARK: - List
                 ForEach(expenses) { expense in
                     ExpenseCardView(expense: expense)
-                        .onLongPressGesture {
-                            expenseToEdit = expense
-                        }// onLongPressGesture
+                        .swipeActions(edge: .leading) {
+                            Button("Edit") {
+                                expenseToEdit = expense
+                            }
+                            .tint(.blue)
+                        }
                 }// ForEach
                 .onDelete(perform: deleteExpense)
             }// Expenses List
@@ -63,6 +72,11 @@ struct BudgetDetailScreen: View {
                 EditExpenseScreen(expense: expenseToEdit)
             }// NavigationStack
         }// sheet
+        .sheet(isPresented: $addExpensePresented) {
+            NavigationStack {
+                AddExpenseScreen(budget: budget)
+            }
+        }
     }// body
     
     // MARK: - Methods & Functions
@@ -77,7 +91,6 @@ struct BudgetDetailScreen: View {
             print("❌ Failed to delete expense: \(error.localizedDescription)")
         }
     }// delete expense function
-    
 }// View
 
 // MARK: - Preview Container
