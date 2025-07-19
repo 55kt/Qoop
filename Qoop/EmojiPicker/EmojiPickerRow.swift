@@ -19,9 +19,10 @@ struct EmojiPickerRow: View {
         } label: {
             HStack {
                 Text(title)
+                    .foregroundStyle(.accent)
                 Spacer()
                 Text(selection)
-                    .font(.title)
+                    .font(.system(size: 40))
             }
             .padding(.horizontal)
             .tint(.primary)

@@ -26,12 +26,14 @@ struct PersistenceController {
         entertainment.title = "Entertainment"
         entertainment.limit = 100
         entertainment.emoji = emojiData.emoji["film"] ?? EmojiDataModel.defaultEmoji
+        entertainment.isActive = true
         entertainment.dateCreated = Date()
         
         let milk = Expense(context: viewContext)
         milk.title = "Milk"
         milk.amount = 3.49
         milk.quantity = 2
+        milk.location = "Milk Shop"
         milk.emoji = emojiData.emoji["milk"] ?? EmojiDataModel.defaultEmoji
         milk.dateCreated = Date()
         
@@ -39,6 +41,7 @@ struct PersistenceController {
         cookies.title = "Cookies"
         cookies.quantity = 3
         cookies.amount = 2.99
+        cookies.location = "Cookies Shop"
         cookies.emoji = emojiData.emoji["cookie"] ?? EmojiDataModel.defaultEmoji
         cookies.dateCreated = Date()
         

@@ -30,53 +30,51 @@ struct AddBudgetScreen: View {
     var body: some View {
         NavigationStack {
             Form {
-                HStack {
-                    Text("New Budget")
-                        .font(.title)
-                    
-                    Spacer()
-                    
-                    Text(emoji)
-                        .font(.largeTitle)
-                }// HStack
                 
-                TextField("Title", text: $title)
-                TextField("Limit", value: $limit, format: .number)
-                    .keyboardType(.numberPad)
+                
+                Section {
+                    TextField("Title", text: $title)
+                    TextField("Limit", value: $limit, format: .number)
+                        .keyboardType(.numberPad)
+                }
+                .padding(10)
                 
                 EmojiPickerRow(title: "Select emoji", selection: $emoji)
+                    .frame(maxWidth: .infinity)
                 
                 if let error = errorMessage {
                     Text(error)
                         .foregroundStyle(.red)
                 }// if let error
-                
-                Button("Save") {
-                    guard let unwrappedLimit = limit else { return }
-                    
-                    viewModel.addBudget(
-                        title: title,
-                        limit: unwrappedLimit,
-                        emoji: emoji,
-                        context: viewContext
-                    )
-                    
-                    if !viewModel.showErrorAlert {
-                        isPresented = false
-                    }
-                }// save button
-                .disabled(!isFormValid)
-                .frame(maxWidth: .infinity)
-                .frame(maxWidth: .infinity)
-                .disabled(!isFormValid)
             }// Form
+            .navigationTitle("Add Budget")
+            .navigationBarTitleDisplayMode(.inline)
+            
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
                         dismiss()
                     }
                 }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        guard let unwrappedLimit = limit else { return }
+                        
+                        viewModel.addBudget(
+                            title: title,
+                            limit: unwrappedLimit,
+                            emoji: emoji,
+                            context: viewContext
+                        )
+                        
+                        if !viewModel.showErrorAlert {
+                            isPresented = false
+                        }
+                    }// save button
+                    .disabled(!isFormValid)
+                }
             }
+
         }// NavigationStack
     }// View
 }// body

@@ -26,6 +26,32 @@ struct BudgetListScreen: View {
     var body: some View {
         NavigationStack {
             List {
+                VStack(spacing: 0) {
+                    HStack {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundStyle(.green)
+                        Text("Active budget")
+                        Spacer()
+                    }
+                    .fontWeight(.bold)
+
+                    
+                    if let activeBudget = budgets.first(where: { $0.isActive }) {
+                        NavigationLink {
+                            BudgetDetailScreen(budget: activeBudget)
+                        } label: {
+                            BudgetCardView(budget: activeBudget)
+                        }
+                    }
+                    Divider()
+                        .padding(.trailing, -30)
+
+                }
+                .listRowSeparator(.hidden)
+
+                
+                Text("Other")
+                    .fontWeight(.bold)
                 ForEach(budgets) { budget in
                     NavigationLink {
                         BudgetDetailScreen(budget: budget)
