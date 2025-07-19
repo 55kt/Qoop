@@ -25,44 +25,57 @@ struct BudgetListScreen: View {
     // MARK: - Body
     var body: some View {
         NavigationStack {
+            
+            let activeBudgets = budgets.filter { $0.isActive }
+            let otherBudgets = budgets.filter { !$0.isActive }
+            
             List {
-                VStack(spacing: 0) {
-                    HStack {
-                        Image(systemName: "checkmark.circle.fill")
-                            .foregroundStyle(.green)
-                        Text("Active budget")
-                        Spacer()
-                    }
-                    .fontWeight(.bold)
-
-                    
-                    if let activeBudget = budgets.first(where: { $0.isActive }) {
-                        NavigationLink {
-                            BudgetDetailScreen(budget: activeBudget)
-                        } label: {
-                            BudgetCardView(budget: activeBudget)
+                // MARK: - Active Budgets
+                if !activeBudgets.isEmpty {
+                    Section {
+                        ForEach(activeBudgets) { budget in
+                            NavigationLink {
+                                BudgetDetailScreen(budget: budget)
+                            } label: {
+                                BudgetCardView(budget: budget)
+                            }
+                        }
+                        .onDelete { indexSet in
+                            viewModel.deleteBudget(offsets: indexSet, budgets: activeBudgets, context: viewContext)
+                        }
+                    } header: {
+                        HStack(spacing: 2) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(.green)
+                                .font(.system(size: 18))
+                            Text("Active budgets")
+                                .font(.title3)
+                                .fontWeight(.bold)
+                                .foregroundColor(.primary)
                         }
                     }
-                    Divider()
-                        .padding(.trailing, -30)
-
                 }
-                .listRowSeparator(.hidden)
 
-                
-                Text("Other")
-                    .fontWeight(.bold)
-                ForEach(budgets) { budget in
-                    NavigationLink {
-                        BudgetDetailScreen(budget: budget)
-                    } label: {
-                        BudgetCardView(budget: budget)
-                    }// NavigationLink
-                }// ForEach
-                .onDelete { indexSet in
-                    viewModel.deleteBudget(offsets: indexSet, budgets: budgets, context: viewContext)
+                // MARK: - Other Budgets
+                if !otherBudgets.isEmpty {
+                    Section {
+                        ForEach(otherBudgets) { budget in
+                            NavigationLink {
+                                BudgetDetailScreen(budget: budget)
+                            } label: {
+                                BudgetCardView(budget: budget)
+                            }
+                        }
+                        .onDelete { indexSet in
+                            viewModel.deleteBudget(offsets: indexSet, budgets: otherBudgets, context: viewContext)
+                        }
+                    } header: {
+                        Text("Other budgets")
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .foregroundColor(.primary)
+                    }
                 }
-                .listRowBackground(Color.clear)
             }// List
             .listStyle(.plain)
             .navigationTitle("Budgets")
@@ -72,8 +85,15 @@ struct BudgetListScreen: View {
                         isPresented.toggle()
                     } label: {
                         Image(systemName: "plus")
+                            .bold()
                     }
-
+                }
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("Edit") {
+                        
+                    }
+                    .bold()
                 }
             }// toolbar
             .sheet(isPresented: $isPresented) {

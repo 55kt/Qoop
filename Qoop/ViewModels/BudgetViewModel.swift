@@ -47,7 +47,7 @@ final class BudgetViewModel: ObservableObject {
         }
     }
     
-    func deleteBudget(offsets: IndexSet, budgets: FetchedResults<Budget>, context: NSManagedObjectContext) {
+    func deleteBudget(offsets: IndexSet, budgets: [Budget], context: NSManagedObjectContext) {
         offsets.forEach { index in
             let budget = budgets[index]
             context.delete(budget)
