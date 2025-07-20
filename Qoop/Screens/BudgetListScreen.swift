@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BudgetListScreen: View {
     // MARK: - Properties
-    @FetchRequest(sortDescriptors: [SortDescriptor(\Budget.dateCreated, order: .reverse)], animation: .default)
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.orderIndex, order: .forward)], animation: .default)
     private var budgets: FetchedResults<Budget>
     
     @Environment(\.managedObjectContext) private var viewContext
@@ -44,6 +44,9 @@ struct BudgetListScreen: View {
                         .onDelete { indexSet in
                             viewModel.deleteBudget(offsets: indexSet, budgets: activeBudgets, context: viewContext)
                         }// onDelete
+                        .onMove { indices, newOffset in
+                            viewModel.moveBudgets(budgets: activeBudgets, fromOffsets: indices, toOffset: newOffset, context: viewContext)
+                        }// onMove
                     } header: {
                         HStack(spacing: 2) {
                             Image(systemName: "checkmark.circle.fill")
@@ -70,6 +73,9 @@ struct BudgetListScreen: View {
                         .onDelete { indexSet in
                             viewModel.deleteBudget(offsets: indexSet, budgets: otherBudgets, context: viewContext)
                         }// onDelete
+                        .onMove { indices, newOffset in
+                            viewModel.moveBudgets(budgets: otherBudgets, fromOffsets: indices, toOffset: newOffset, context: viewContext)
+                        }// onMove
                     } header: {
                         if budgets.contains(where: { $0.isActive }) {
                                 Text("Other budgets")
@@ -92,9 +98,7 @@ struct BudgetListScreen: View {
                 }
                 
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Edit") {
-                        
-                    }
+                    EditButton()
                 }// Edit button
             }// toolbar
             .sheet(isPresented: $isPresented) {

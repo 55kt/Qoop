@@ -16,6 +16,8 @@ struct BudgetDetailScreen: View {
     @State private var expenseToEdit: Expense?
     @State private var addExpensePresented: Bool = false
     
+    @StateObject private var viewModel = BudgetViewModel()
+    
     // MARK: - Initializer
     init(budget: Budget) {
         self.budget = budget
@@ -25,6 +27,16 @@ struct BudgetDetailScreen: View {
     var body: some View {
         // MARK: - Budget Detail Header
         Form {
+            
+            Toggle(isOn: Binding(
+                get: { budget.isActive },
+                set: { newValue in
+                    viewModel.setActiveBudget(budget, isActive: newValue, context: viewContext)
+                }
+            )) {
+                Label("Active budget", systemImage: "checkmark.circle.fill")
+            }
+            
             HStack {
                 Text(budget.emoji ?? EmojiDataModel.defaultEmoji)
                 

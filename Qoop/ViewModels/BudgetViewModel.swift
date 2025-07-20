@@ -91,4 +91,32 @@ final class BudgetViewModel: ObservableObject {
                 showErrorAlert = true
             }
         }
+    
+    func moveBudgets(budgets: [Budget], fromOffsets: IndexSet, toOffset: Int, context: NSManagedObjectContext) {
+        var reordered = budgets
+        reordered.move(fromOffsets: fromOffsets, toOffset: toOffset)
+
+        for (index, budget) in reordered.enumerated() {
+            budget.orderIndex = Int64(index)
+        }
+
+        do {
+            try context.save()
+        } catch {
+            errorMessage = "❌ Failed to reorder budgets: \(error.localizedDescription)"
+            showErrorAlert = true
+        }
+    }
+    
+    func setActiveBudget(_ budget: Budget, isActive: Bool, context: NSManagedObjectContext) {
+        budget.isActive = isActive
+        
+        do {
+            try context.save()
+        } catch {
+            context.rollback()
+            errorMessage = "Failed to update active status: \(error.localizedDescription)"
+            showErrorAlert = true
+        }
+    }
 }
