@@ -18,8 +18,9 @@ struct BudgetListScreen: View {
     
     @StateObject private var viewModel = BudgetViewModel()
     
-    
     @State private var budgetToEdit: Budget? = nil
+    @State private var isEditing: Bool = false
+    
     @State private var showDeleteAlert: Bool = false
     
     // MARK: - Body
@@ -39,10 +40,10 @@ struct BudgetListScreen: View {
                             } label: {
                                 BudgetCardView(budget: budget)
                             }
-                        }
+                        }// ForEach
                         .onDelete { indexSet in
                             viewModel.deleteBudget(offsets: indexSet, budgets: activeBudgets, context: viewContext)
-                        }
+                        }// onDelete
                     } header: {
                         HStack(spacing: 2) {
                             Image(systemName: "checkmark.circle.fill")
@@ -52,9 +53,9 @@ struct BudgetListScreen: View {
                                 .font(.title3)
                                 .fontWeight(.bold)
                                 .foregroundColor(.primary)
-                        }
-                    }
-                }
+                        }// HStack
+                    }// Section
+                }// if budget is active
 
                 // MARK: - Other Budgets
                 if !otherBudgets.isEmpty {
@@ -65,17 +66,19 @@ struct BudgetListScreen: View {
                             } label: {
                                 BudgetCardView(budget: budget)
                             }
-                        }
+                        }// ForEach
                         .onDelete { indexSet in
                             viewModel.deleteBudget(offsets: indexSet, budgets: otherBudgets, context: viewContext)
-                        }
+                        }// onDelete
                     } header: {
-                        Text("Other budgets")
-                            .font(.title3)
-                            .fontWeight(.bold)
-                            .foregroundColor(.primary)
-                    }
-                }
+                        if budgets.contains(where: { $0.isActive }) {
+                                Text("Other budgets")
+                                    .font(.title3)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.primary)
+                            }// hide other budgets header
+                    }// Section
+                }// if budget is not active
             }// List
             .listStyle(.plain)
             .navigationTitle("Budgets")
@@ -85,7 +88,6 @@ struct BudgetListScreen: View {
                         isPresented.toggle()
                     } label: {
                         Image(systemName: "plus")
-                            .bold()
                     }
                 }
                 
@@ -93,8 +95,7 @@ struct BudgetListScreen: View {
                     Button("Edit") {
                         
                     }
-                    .bold()
-                }
+                }// Edit button
             }// toolbar
             .sheet(isPresented: $isPresented) {
                 AddBudgetScreen(viewModel: viewModel, isPresented: $isPresented)

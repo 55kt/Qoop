@@ -30,6 +30,7 @@
 		4B116E682E26A8A300B45CEC /* Expense+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E672E26A8A300B45CEC /* Expense+Extensions.swift */; };
 		4B116E6A2E27F9FD00B45CEC /* EditExpenseScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E692E27F9FD00B45CEC /* EditExpenseScreen.swift */; };
 		4B116E6C2E293CE200B45CEC /* AddExpenseScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E6B2E293CE200B45CEC /* AddExpenseScreen.swift */; };
+		4B116E6E2E2D429700B45CEC /* BudgetEditScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E6D2E2D429700B45CEC /* BudgetEditScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		4B116E672E26A8A300B45CEC /* Expense+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Expense+Extensions.swift"; sourceTree = "<group>"; };
 		4B116E692E27F9FD00B45CEC /* EditExpenseScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExpenseScreen.swift; sourceTree = "<group>"; };
 		4B116E6B2E293CE200B45CEC /* AddExpenseScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseScreen.swift; sourceTree = "<group>"; };
+		4B116E6D2E2D429700B45CEC /* BudgetEditScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetEditScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +170,7 @@
 				4B116E482E22E5C700B45CEC /* AddBudgetScreen.swift */,
 				4B116E692E27F9FD00B45CEC /* EditExpenseScreen.swift */,
 				4B116E6B2E293CE200B45CEC /* AddExpenseScreen.swift */,
+				4B116E6D2E2D429700B45CEC /* BudgetEditScreen.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				4B116E6C2E293CE200B45CEC /* AddExpenseScreen.swift in Sources */,
 				4B116E682E26A8A300B45CEC /* Expense+Extensions.swift in Sources */,
 				4B116E4F2E23F3DE00B45CEC /* BudgetViewModel.swift in Sources */,
+				4B116E6E2E2D429700B45CEC /* BudgetEditScreen.swift in Sources */,
 				4B116E582E2422E900B45CEC /* EmojiDataModel.swift in Sources */,
 				4B116E622E2582E000B45CEC /* ExpenseManager.swift in Sources */,
 				4B116E352E22BF8400B45CEC /* Persistence.swift in Sources */,
@@ -419,6 +423,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -449,6 +454,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

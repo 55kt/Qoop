@@ -61,7 +61,7 @@ final class BudgetViewModel: ObservableObject {
         }
     }
     
-    func updateBudget(_ budget: Budget, newTitle: String, newLimit: Double, newEmoji: String, context: NSManagedObjectContext) {
+    func editBudget(_ budget: Budget, newTitle: String, newLimit: Double, newEmoji: String, context: NSManagedObjectContext) {
             guard !newTitle.isEmptyOrWhitespace, newLimit > 0 else {
                 errorMessage = "Invalid input"
                 showErrorAlert = true
