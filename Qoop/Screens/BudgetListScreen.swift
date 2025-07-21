@@ -11,30 +11,22 @@ struct BudgetListScreen: View {
     // MARK: - Properties
     @FetchRequest(sortDescriptors: [SortDescriptor(\.orderIndex, order: .forward)], animation: .default)
     private var budgets: FetchedResults<Budget>
-    
-    @Environment(\.managedObjectContext) private var viewContext
-    
-    @State private var isPresented: Bool = false
-    
     @StateObject private var viewModel = BudgetViewModel()
-    
-    @State private var budgetToEdit: Budget? = nil
-    @State private var isEditing: Bool = false
-    
-    @State private var showDeleteAlert: Bool = false
+    @Environment(\.managedObjectContext) private var viewContext
+    @State private var isPresented: Bool = false
     
     // MARK: - Body
     var body: some View {
         NavigationStack {
             
-            let activeBudgets = budgets.filter { $0.isActive }
-            let otherBudgets = budgets.filter { !$0.isActive }
+            let hasActiveBudgets = budgets.contains(where: { $0.isActive })
+            let hasOtherBudgets = budgets.contains(where: { !$0.isActive })
             
             List {
                 // MARK: - Active Budgets
-                if !activeBudgets.isEmpty {
+                if hasActiveBudgets {
                     Section {
-                        ForEach(activeBudgets) { budget in
+                        ForEach(budgets.filter { $0.isActive }) { budget in
                             NavigationLink {
                                 BudgetDetailScreen(budget: budget)
                             } label: {
@@ -42,10 +34,10 @@ struct BudgetListScreen: View {
                             }
                         }// ForEach
                         .onDelete { indexSet in
-                            viewModel.deleteBudget(offsets: indexSet, budgets: activeBudgets, context: viewContext)
+                            viewModel.deleteBudget(offsets: indexSet, budgets: budgets.filter { $0.isActive }, context: viewContext)
                         }// onDelete
                         .onMove { indices, newOffset in
-                            viewModel.moveBudgets(budgets: activeBudgets, fromOffsets: indices, toOffset: newOffset, context: viewContext)
+                            viewModel.moveBudgets(budgets: budgets.filter { $0.isActive }, fromOffsets: indices, toOffset: newOffset, context: viewContext)
                         }// onMove
                     } header: {
                         HStack(spacing: 2) {
@@ -61,9 +53,9 @@ struct BudgetListScreen: View {
                 }// if budget is active
 
                 // MARK: - Other Budgets
-                if !otherBudgets.isEmpty {
+                if hasOtherBudgets {
                     Section {
-                        ForEach(otherBudgets) { budget in
+                        ForEach(budgets.filter { !$0.isActive }) { budget in
                             NavigationLink {
                                 BudgetDetailScreen(budget: budget)
                             } label: {
@@ -71,10 +63,10 @@ struct BudgetListScreen: View {
                             }
                         }// ForEach
                         .onDelete { indexSet in
-                            viewModel.deleteBudget(offsets: indexSet, budgets: otherBudgets, context: viewContext)
+                            viewModel.deleteBudget(offsets: indexSet, budgets: budgets.filter { !$0.isActive }, context: viewContext)
                         }// onDelete
                         .onMove { indices, newOffset in
-                            viewModel.moveBudgets(budgets: otherBudgets, fromOffsets: indices, toOffset: newOffset, context: viewContext)
+                            viewModel.moveBudgets(budgets: budgets.filter { !$0.isActive }, fromOffsets: indices, toOffset: newOffset, context: viewContext)
                         }// onMove
                     } header: {
                         if budgets.contains(where: { $0.isActive }) {
@@ -108,7 +100,7 @@ struct BudgetListScreen: View {
             }// sheet
             .onAppear {
                 print("Budgets: \(budgets.map { $0.title ?? "No title" })")
-            }// onAppear
+            }// onAppear DELETE THIS LATER IN PRODUCTION
             
             
         }// NavigationStack
