@@ -24,14 +24,14 @@ extension Budget {
     }
     
     var spent: Double {
-        guard let expenses = expenses as? Set<Expense> else { return 0 }
-        return expenses.reduce(0) { total, expense in
-            return total + (expense.amount * Double(expense.quantity))
+            guard let expenses = expenses as? Set<Expense> else { return 0 }
+            return expenses.reduce(0) { total, expense in
+                return total + (expense.amount * Double(expense.quantity))
+            }
         }
-    }
-    
-    var remaining: Double {
-        limit - spent
-    }
+        
+        var remaining: Double {
+            max(0, limit - spent)
+        }
     
 }

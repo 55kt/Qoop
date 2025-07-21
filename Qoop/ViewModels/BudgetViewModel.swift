@@ -14,6 +14,7 @@ final class BudgetViewModel: ObservableObject {
     
     @Published var errorMessage: String? = nil
     @Published var showErrorAlert: Bool = false
+    @Environment(\.managedObjectContext) private var viewContext
     
     func addBudget(title: String, limit: Double, emoji: String, context: NSManagedObjectContext) {
         guard !title.isEmptyOrWhitespace, limit > 0 else {
@@ -117,6 +118,19 @@ final class BudgetViewModel: ObservableObject {
             context.rollback()
             errorMessage = "Failed to update active status: \(error.localizedDescription)"
             showErrorAlert = true
+        }
+    }
+    
+    func searchBudgets(_ searchText: String, in budgets: [Budget]) -> [Budget] {
+        guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return budgets
+        }
+
+        return budgets.filter { budget in
+            let lowercasedQuery = searchText.lowercased()
+
+            return (budget.title?.lowercased().contains(lowercasedQuery) ?? false) ||
+                   (budget.emoji?.lowercased().contains(lowercasedQuery) ?? false)
         }
     }
 }

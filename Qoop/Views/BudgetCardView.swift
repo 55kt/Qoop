@@ -13,28 +13,22 @@ struct BudgetCardView: View {
     
     // MARK: - Body
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading) {
             HStack {
-                VStack(alignment: .leading, spacing: -5) {
+                VStack(alignment: .leading) {
                     Text(budget.emoji ?? EmojiDataModel.defaultEmoji)
                         .font(.system(size: 80))
-                    
-                    HStack(spacing: 2) {
-                        Text("Created:")
-                        Text(budget.dateCreated ?? Date(), style: .date)
-                    }// HStack
-                    .foregroundStyle(.secondary)
-                    .font(.system(size: 10))
                 }// VStack
                 
                 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading) {
                     Text(budget.title ?? "")
                         .font(.title)
                     HStack(spacing: 3) {
                         Text("Remaining:")
                         
-                        Text(budget.limit, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                        Text(budget.remaining, format: .currency(code: Locale.currencyCode))
+                            .foregroundColor(remainingStatusColor(limit: budget.limit, remaining: budget.remaining))
                     }// HStack
                     .font(.subheadline)
 
@@ -52,12 +46,37 @@ struct BudgetCardView: View {
                                 .bold()
                         }// ZStack
                     }// if
+                    
+                    HStack(spacing: 2) {
+                        Text("Created:")
+                        Text(budget.dateCreated ?? Date(), style: .date)
+                    }// HStack
+                    .foregroundStyle(.secondary)
+                    .font(.system(size: 10))
                 }// VStack
                 .frame(height: .zero)
             }// HStack
         }// VStack
         .shadow(radius: 0.5)
     }// View
+    
+    func remainingStatusColor(limit: Double, remaining: Double) -> Color {
+            guard limit > 0, remaining >= 0 else { return .gray }
+            
+            let percentage = remaining / limit
+            
+            switch percentage {
+            case let x where x >= 0.75:
+                return .green
+            case 0.25..<0.75:
+                return .yellow
+            case ..<0.25:
+                return .red
+            default:
+                return .gray
+            }
+        }
+    
 }// View
 
 // MARK: - Preview

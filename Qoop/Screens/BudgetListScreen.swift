@@ -14,19 +14,21 @@ struct BudgetListScreen: View {
     @StateObject private var viewModel = BudgetViewModel()
     @Environment(\.managedObjectContext) private var viewContext
     @State private var isPresented: Bool = false
+    @State private var searchText: String = ""
     
     // MARK: - Body
     var body: some View {
         NavigationStack {
             
-            let hasActiveBudgets = budgets.contains(where: { $0.isActive })
-            let hasOtherBudgets = budgets.contains(where: { !$0.isActive })
+            let filteredBudgets = viewModel.searchBudgets(searchText, in: Array(budgets))
+            let hasActiveBudgets = filteredBudgets.contains { $0.isActive }
+            let hasOtherBudgets = filteredBudgets.contains { !$0.isActive }
             
             List {
                 // MARK: - Active Budgets
                 if hasActiveBudgets {
                     Section {
-                        ForEach(budgets.filter { $0.isActive }) { budget in
+                        ForEach(filteredBudgets.filter { $0.isActive }) { budget in
                             NavigationLink {
                                 BudgetDetailScreen(budget: budget)
                             } label: {
@@ -34,10 +36,12 @@ struct BudgetListScreen: View {
                             }
                         }// ForEach
                         .onDelete { indexSet in
-                            viewModel.deleteBudget(offsets: indexSet, budgets: budgets.filter { $0.isActive }, context: viewContext)
+                            let activeBudgets = filteredBudgets.filter { $0.isActive }
+                            viewModel.deleteBudget(offsets: indexSet, budgets: activeBudgets, context: viewContext)
                         }// onDelete
                         .onMove { indices, newOffset in
-                            viewModel.moveBudgets(budgets: budgets.filter { $0.isActive }, fromOffsets: indices, toOffset: newOffset, context: viewContext)
+                            let activeBudgets = filteredBudgets.filter { $0.isActive }
+                            viewModel.moveBudgets(budgets: activeBudgets, fromOffsets: indices, toOffset: newOffset, context: viewContext)
                         }// onMove
                     } header: {
                         HStack(spacing: 2) {
@@ -50,12 +54,13 @@ struct BudgetListScreen: View {
                                 .foregroundColor(.primary)
                         }// HStack
                     }// Section
+                    .transition(.opacity)
                 }// if budget is active
-
+                
                 // MARK: - Other Budgets
                 if hasOtherBudgets {
                     Section {
-                        ForEach(budgets.filter { !$0.isActive }) { budget in
+                        ForEach(filteredBudgets.filter { !$0.isActive }) { budget in
                             NavigationLink {
                                 BudgetDetailScreen(budget: budget)
                             } label: {
@@ -70,16 +75,24 @@ struct BudgetListScreen: View {
                         }// onMove
                     } header: {
                         if budgets.contains(where: { $0.isActive }) {
+                            HStack {
+                                Image(systemName: "doc.on.clipboard.fill")
+                                    .font(.system(size: 18))
+                                
                                 Text("Other budgets")
-                                    .font(.title3)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.primary)
-                            }// hide other budgets header
+                            }
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .foregroundColor(.primary)
+                        }// hide other budgets header
                     }// Section
+                    .transition(.opacity)
                 }// if budget is not active
             }// List
             .listStyle(.plain)
+            .animation(.easeInOut(duration: 0.3), value: searchText)
             .navigationTitle("Budgets")
+            .searchable(text: $searchText)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -96,7 +109,7 @@ struct BudgetListScreen: View {
             .sheet(isPresented: $isPresented) {
                 AddBudgetScreen(viewModel: viewModel, isPresented: $isPresented)
                     .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
-                    .presentationDetents([.fraction(0.50)])
+                    .presentationDetents([.fraction(0.60)])
             }// sheet
             .onAppear {
                 print("Budgets: \(budgets.map { $0.title ?? "No title" })")
