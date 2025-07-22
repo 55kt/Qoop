@@ -1,5 +1,5 @@
 //
-//  ExpenseManager.swift
+//  ExpenseViewModel.swift
 //  Qoop
 //
 //  Created by Vlad on 14/7/25.
@@ -8,7 +8,8 @@
 import Foundation
 import CoreData
 
-final class ExpenseManager {
+@MainActor
+final class ExpenseViewModel: ObservableObject {
     
     static func addExpense(title: String, amount: Double, quantity: Int?, emoji: String, location: String, budget: Budget, context: NSManagedObjectContext) throws {
         guard !title.isEmptyOrWhitespace, amount > 0, (quantity ?? 0) > 0, !location.isEmpty else {
@@ -32,5 +33,25 @@ final class ExpenseManager {
             context.rollback()
             throw error
         }
+    }
+    
+    func deleteExpense(_ expense: Expense, context: NSManagedObjectContext) {
+        context.delete(expense)
+        if let budget = expense.budget {
+            do {
+                try context.save()
+                context.refresh(budget, mergeChanges: true)
+            } catch {
+                print("Failed to delete expense: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func calculateBudgetDetails(for budget: Budget) -> (spent: Double, remaining: Double) {
+        let spent = (budget.expenses as? Set<Expense> ?? []).reduce(0) { total, expense in
+            total + (expense.amount * Double(expense.quantity))
+        }
+        let remaining = max(0, budget.limit - spent)
+        return (spent, remaining)
     }
 }

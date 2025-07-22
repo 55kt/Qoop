@@ -41,7 +41,7 @@ struct BudgetDetailScreen: View {
                 Text(budget.emoji ?? EmojiDataModel.defaultEmoji)
                 
                 Spacer()
-                Text("Limit:")
+                Text("Total Limit:")
                 Text(budget.limit, format: .currency(code: Locale.currencyCode))
                 
                 Spacer()
@@ -56,14 +56,7 @@ struct BudgetDetailScreen: View {
             Section("Expenses") {
                 
                 // MARK: - Header
-                HStack {
-                    Text("Spent: \(budget.spent, format: .currency(code: Locale.currencyCode))")
-                    
-                    Spacer()
-                    
-                    Text("Remaining: \(budget.remaining, format: .currency(code: Locale.currencyCode))")
-                        .foregroundStyle(budget.remaining < 0 ? .red : .green)
-                }// HStack
+                
                 
                 // MARK: - List
                 ForEach(expenses) { expense in

@@ -13,6 +13,7 @@ struct ActiveBudgetsSectionView: View {
     let budgets: [Budget]
     let onDelete: (IndexSet) -> Void
     let onMove: (IndexSet, Int) -> Void
+    let expenseViewModel: ExpenseViewModel
 
     // MARK: - Body
     var body: some View {
@@ -22,7 +23,7 @@ struct ActiveBudgetsSectionView: View {
                     NavigationLink {
                         BudgetDetailScreen(budget: budget)
                     } label: {
-                        BudgetCardView(budget: budget)
+                        BudgetCardView(budget: budget, expenseViewModel: expenseViewModel)
                     }
                 }// ForEach
                 .onDelete(perform: onDelete)

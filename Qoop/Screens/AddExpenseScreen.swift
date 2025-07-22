@@ -42,7 +42,7 @@ struct AddExpenseScreen: View {
                             return
                         }
                         do {
-                            try ExpenseManager.addExpense(title: title, amount: unwrappedAmount, quantity: unwrappedQuantity, emoji: emoji, location: location, budget: budget, context: viewContext)
+                            try ExpenseViewModel.addExpense(title: title, amount: unwrappedAmount, quantity: unwrappedQuantity, emoji: emoji, location: location, budget: budget, context: viewContext)
                             title = ""
                             amount = nil
                             quantity = nil

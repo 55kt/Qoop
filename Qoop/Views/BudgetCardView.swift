@@ -10,11 +10,17 @@ import SwiftUI
 struct BudgetCardView: View {
     // MARK: - Properties
     let budget: Budget
+    @ObservedObject var expenseViewModel: ExpenseViewModel
     private let statusColor: Color
+    private let (spent, remaining): (Double, Double)
     
-    init(budget: Budget) {
+    init(budget: Budget, expenseViewModel: ExpenseViewModel) {
         self.budget = budget
-        self.statusColor = Self.remainingStatusColor(limit: budget.limit, remaining: budget.remaining)
+        self.expenseViewModel = expenseViewModel
+        let details = expenseViewModel.calculateBudgetDetails(for: budget)
+        self.spent = details.spent
+        self.remaining = details.remaining
+        self.statusColor = Self.remainingStatusColor(limit: budget.limit, remaining: remaining)
     }
     
     // MARK: - Body
@@ -28,10 +34,10 @@ struct BudgetCardView: View {
                     .font(.title)
                 
                 HStack(spacing: 3) {
-                    Text("Remaining:")
-                    Text(budget.remaining, format: .currency(code: Locale.currencyCode))
+                    Text(remaining, format: .currency(code: Locale.currencyCode))
                         .foregroundColor(statusColor)
-                }// HStack
+                    Text(" / \(budget.limit, format: .currency(code: Locale.currencyCode))")
+                }
                 .font(.subheadline)
                 
                 if budget.isActive {
@@ -43,25 +49,21 @@ struct BudgetCardView: View {
                                 .foregroundColor(.green)
                                 .bold()
                         }
-                }// if budget is active
+                }
                 
                 Text("Created: \(budget.dateCreated?.formatted(date: .abbreviated, time: .omitted) ?? "")")
                     .foregroundStyle(.secondary)
                     .font(.system(size: 10))
-            }// VStack
-        }// HStack
-    }// body
+            }
+        }
+        .padding(.vertical, 5)
+    }
     
-    // MARK: - Methods
     static func remainingStatusColor(limit: Double, remaining: Double) -> Color {
         guard limit > 0, remaining >= 0 else { return .gray }
         let percentage = remaining / limit
         return percentage >= 0.75 ? .green : percentage >= 0.25 ? .yellow : .red
-    }// remainingStatusColor
-    
-}// View
-
-// MARK: - Preview
-#Preview {
-    BudgetCardView(budget: Budget(context: PersistenceController.preview.container.viewContext))
+    }
 }
+
+

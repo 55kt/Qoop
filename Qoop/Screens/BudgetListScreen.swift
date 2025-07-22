@@ -18,6 +18,7 @@ struct BudgetListScreen: View {
     ) private var budgets: FetchedResults<Budget>
     
     @StateObject private var viewModel = BudgetViewModel()
+    @StateObject private var expenseViewModel = ExpenseViewModel()
     @Environment(\.managedObjectContext) private var viewContext
     @State private var isPresented: Bool = false
     @State private var searchText: String = ""
@@ -46,7 +47,7 @@ struct BudgetListScreen: View {
                     onMove: { indices, newOffset in
                         let active = filteredBudgets.filter { $0.isActive }
                         viewModel.moveBudgets(budgets: active, fromOffsets: indices, toOffset: newOffset, context: viewContext)
-                    }
+                    }, expenseViewModel: expenseViewModel
                 )// Active Budgets
                 
                 // MARK: - Other Budgets
@@ -60,7 +61,7 @@ struct BudgetListScreen: View {
                     onMove: { indices, newOffset in
                         let other = filteredBudgets.filter { !$0.isActive }
                         viewModel.moveBudgets(budgets: other, fromOffsets: indices, toOffset: newOffset, context: viewContext)
-                    }
+                    }, expenseViewModel: expenseViewModel
                 )// Other Budgets
             }// List
             .listStyle(.plain)
