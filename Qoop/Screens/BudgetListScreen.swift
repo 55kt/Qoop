@@ -7,93 +7,67 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct BudgetListScreen: View {
     // MARK: - Properties
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.orderIndex, order: .forward)], animation: .default)
-    private var budgets: FetchedResults<Budget>
+    @FetchRequest(
+        sortDescriptors: [SortDescriptor(\.orderIndex, order: .forward)],
+        predicate: nil,
+        animation: .default
+    ) private var budgets: FetchedResults<Budget>
+    
     @StateObject private var viewModel = BudgetViewModel()
     @Environment(\.managedObjectContext) private var viewContext
     @State private var isPresented: Bool = false
     @State private var searchText: String = ""
     
+    private var dynamicPredicate: NSPredicate? {
+        searchText.isEmpty ? nil : NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+    }
+    
+    private var filteredBudgets: [Budget] {
+        dynamicPredicate.map { predicate in
+            budgets.filter { predicate.evaluate(with: $0) }
+        } ?? Array(budgets)
+    }
+    
     // MARK: - Body
     var body: some View {
         NavigationStack {
-            
-            let filteredBudgets = viewModel.searchBudgets(searchText, in: Array(budgets))
-            let hasActiveBudgets = filteredBudgets.contains { $0.isActive }
-            let hasOtherBudgets = filteredBudgets.contains { !$0.isActive }
-            
             List {
                 // MARK: - Active Budgets
-                if hasActiveBudgets {
-                    Section {
-                        ForEach(filteredBudgets.filter { $0.isActive }) { budget in
-                            NavigationLink {
-                                BudgetDetailScreen(budget: budget)
-                            } label: {
-                                BudgetCardView(budget: budget)
-                            }
-                        }// ForEach
-                        .onDelete { indexSet in
-                            let activeBudgets = filteredBudgets.filter { $0.isActive }
-                            viewModel.deleteBudget(offsets: indexSet, budgets: activeBudgets, context: viewContext)
-                        }// onDelete
-                        .onMove { indices, newOffset in
-                            let activeBudgets = filteredBudgets.filter { $0.isActive }
-                            viewModel.moveBudgets(budgets: activeBudgets, fromOffsets: indices, toOffset: newOffset, context: viewContext)
-                        }// onMove
-                    } header: {
-                        HStack(spacing: 2) {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundStyle(.green)
-                                .font(.system(size: 18))
-                            Text("Active budgets")
-                                .font(.title3)
-                                .fontWeight(.bold)
-                                .foregroundColor(.primary)
-                        }// HStack
-                    }// Section
-                    .transition(.opacity)
-                }// if budget is active
+                ActiveBudgetsSectionView(
+                    budgets: filteredBudgets.filter { $0.isActive },
+                    onDelete: { indexSet in
+                        let active = filteredBudgets.filter { $0.isActive }
+                        viewModel.deleteBudget(offsets: indexSet, budgets: active, context: viewContext)
+                    },
+                    onMove: { indices, newOffset in
+                        let active = filteredBudgets.filter { $0.isActive }
+                        viewModel.moveBudgets(budgets: active, fromOffsets: indices, toOffset: newOffset, context: viewContext)
+                    }
+                )// Active Budgets
                 
                 // MARK: - Other Budgets
-                if hasOtherBudgets {
-                    Section {
-                        ForEach(filteredBudgets.filter { !$0.isActive }) { budget in
-                            NavigationLink {
-                                BudgetDetailScreen(budget: budget)
-                            } label: {
-                                BudgetCardView(budget: budget)
-                            }
-                        }// ForEach
-                        .onDelete { indexSet in
-                            viewModel.deleteBudget(offsets: indexSet, budgets: budgets.filter { !$0.isActive }, context: viewContext)
-                        }// onDelete
-                        .onMove { indices, newOffset in
-                            viewModel.moveBudgets(budgets: budgets.filter { !$0.isActive }, fromOffsets: indices, toOffset: newOffset, context: viewContext)
-                        }// onMove
-                    } header: {
-                        if budgets.contains(where: { $0.isActive }) {
-                            HStack {
-                                Image(systemName: "doc.on.clipboard.fill")
-                                    .font(.system(size: 18))
-                                
-                                Text("Other budgets")
-                            }
-                            .font(.title3)
-                            .fontWeight(.bold)
-                            .foregroundColor(.primary)
-                        }// hide other budgets header
-                    }// Section
-                    .transition(.opacity)
-                }// if budget is not active
+                OtherBudgetsSectionView(
+                    budgets: filteredBudgets.filter { !$0.isActive },
+                    showHeader: filteredBudgets.contains { $0.isActive },
+                    onDelete: { indexSet in
+                        let other = filteredBudgets.filter { !$0.isActive }
+                        viewModel.deleteBudget(offsets: indexSet, budgets: other, context: viewContext)
+                    },
+                    onMove: { indices, newOffset in
+                        let other = filteredBudgets.filter { !$0.isActive }
+                        viewModel.moveBudgets(budgets: other, fromOffsets: indices, toOffset: newOffset, context: viewContext)
+                    }
+                )// Other Budgets
             }// List
             .listStyle(.plain)
-            .animation(.easeInOut(duration: 0.3), value: searchText)
             .navigationTitle("Budgets")
             .searchable(text: $searchText)
             .toolbar {
+                
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         isPresented.toggle()
@@ -104,25 +78,21 @@ struct BudgetListScreen: View {
                 
                 ToolbarItem(placement: .topBarLeading) {
                     EditButton()
-                }// Edit button
+                }
+                
             }// toolbar
             .sheet(isPresented: $isPresented) {
                 AddBudgetScreen(viewModel: viewModel, isPresented: $isPresented)
                     .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
                     .presentationDetents([.fraction(0.60)])
-            }// sheet
-            .onAppear {
-                print("Budgets: \(budgets.map { $0.title ?? "No title" })")
-            }// onAppear DELETE THIS LATER IN PRODUCTION
-            
-            
+            }// Add budget sheet
         }// NavigationStack
         .alert("Error", isPresented: $viewModel.showErrorAlert) {
             Button("OK", role: .cancel) { }
         } message: {
             Text(viewModel.errorMessage ?? "Unknown error")
-        }
-    }// Body
+        }// alert
+    }// body
 }// View
 
 // MARK: - Preview

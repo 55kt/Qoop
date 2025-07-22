@@ -10,72 +10,54 @@ import SwiftUI
 struct BudgetCardView: View {
     // MARK: - Properties
     let budget: Budget
+    private let statusColor: Color
+    
+    init(budget: Budget) {
+        self.budget = budget
+        self.statusColor = Self.remainingStatusColor(limit: budget.limit, remaining: budget.remaining)
+    }
     
     // MARK: - Body
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(budget.emoji ?? EmojiDataModel.defaultEmoji)
-                        .font(.system(size: 80))
-                }// VStack
+        HStack(alignment: .center, spacing: 10) {
+            Text(budget.emoji ?? EmojiDataModel.defaultEmoji)
+                .font(.system(size: 80))
+            
+            VStack(alignment: .leading, spacing: 5) {
+                Text(budget.title ?? "")
+                    .font(.title)
                 
+                HStack(spacing: 3) {
+                    Text("Remaining:")
+                    Text(budget.remaining, format: .currency(code: Locale.currencyCode))
+                        .foregroundColor(statusColor)
+                }// HStack
+                .font(.subheadline)
                 
-                VStack(alignment: .leading) {
-                    Text(budget.title ?? "")
-                        .font(.title)
-                    HStack(spacing: 3) {
-                        Text("Remaining:")
-                        
-                        Text(budget.remaining, format: .currency(code: Locale.currencyCode))
-                            .foregroundColor(remainingStatusColor(limit: budget.limit, remaining: budget.remaining))
-                    }// HStack
-                    .font(.subheadline)
-
-                    
-                    Spacer()
-                    
-                    if budget.isActive {
-                        ZStack {
-                            Capsule()
-                                .frame(width: 80, height: 30)
-                                .foregroundStyle(.ultraThinMaterial)
-                            
+                if budget.isActive {
+                    Capsule()
+                        .frame(width: 80, height: 30)
+                        .foregroundStyle(.ultraThinMaterial)
+                        .overlay {
                             Text("ACTIVE")
                                 .foregroundColor(.green)
                                 .bold()
-                        }// ZStack
-                    }// if
-                    
-                    HStack(spacing: 2) {
-                        Text("Created:")
-                        Text(budget.dateCreated ?? Date(), style: .date)
-                    }// HStack
+                        }
+                }// if budget is active
+                
+                Text("Created: \(budget.dateCreated?.formatted(date: .abbreviated, time: .omitted) ?? "")")
                     .foregroundStyle(.secondary)
                     .font(.system(size: 10))
-                }// VStack
-                .frame(height: .zero)
-            }// HStack
-        }// VStack
-        .shadow(radius: 0.5)
-    }// View
+            }// VStack
+        }// HStack
+    }// body
     
-    func remainingStatusColor(limit: Double, remaining: Double) -> Color {
-            guard limit > 0, remaining >= 0 else { return .gray }
-            
-            let percentage = remaining / limit
-            
-            switch percentage {
-            case let x where x >= 0.75:
-                return .green
-            case 0.25..<0.75:
-                return .yellow
-            case ..<0.25:
-                return .red
-            default:
-                return .gray
-            }
-        }
+    // MARK: - Methods
+    static func remainingStatusColor(limit: Double, remaining: Double) -> Color {
+        guard limit > 0, remaining >= 0 else { return .gray }
+        let percentage = remaining / limit
+        return percentage >= 0.75 ? .green : percentage >= 0.25 ? .yellow : .red
+    }// remainingStatusColor
     
 }// View
 

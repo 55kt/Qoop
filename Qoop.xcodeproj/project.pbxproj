@@ -31,6 +31,8 @@
 		4B116E6A2E27F9FD00B45CEC /* EditExpenseScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E692E27F9FD00B45CEC /* EditExpenseScreen.swift */; };
 		4B116E6C2E293CE200B45CEC /* AddExpenseScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E6B2E293CE200B45CEC /* AddExpenseScreen.swift */; };
 		4B116E6E2E2D429700B45CEC /* BudgetEditScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E6D2E2D429700B45CEC /* BudgetEditScreen.swift */; };
+		4B116E702E2FCA0300B45CEC /* ActiveBudgetsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E6F2E2FCA0300B45CEC /* ActiveBudgetsSectionView.swift */; };
+		4B116E722E2FCB0200B45CEC /* OtherBudgetsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E712E2FCB0200B45CEC /* OtherBudgetsSectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +82,8 @@
 		4B116E692E27F9FD00B45CEC /* EditExpenseScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExpenseScreen.swift; sourceTree = "<group>"; };
 		4B116E6B2E293CE200B45CEC /* AddExpenseScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseScreen.swift; sourceTree = "<group>"; };
 		4B116E6D2E2D429700B45CEC /* BudgetEditScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetEditScreen.swift; sourceTree = "<group>"; };
+		4B116E6F2E2FCA0300B45CEC /* ActiveBudgetsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveBudgetsSectionView.swift; sourceTree = "<group>"; };
+		4B116E712E2FCB0200B45CEC /* OtherBudgetsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherBudgetsSectionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +204,8 @@
 			children = (
 				4B116E532E241A4700B45CEC /* BudgetCardView.swift */,
 				4B116E652E26A7C300B45CEC /* ExpenseCardView.swift */,
+				4B116E6F2E2FCA0300B45CEC /* ActiveBudgetsSectionView.swift */,
+				4B116E712E2FCB0200B45CEC /* OtherBudgetsSectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -368,8 +374,10 @@
 				4B116E362E22BF8400B45CEC /* Qoop.xcdatamodeld in Sources */,
 				4B116E5A2E24294A00B45CEC /* EmojiPickerView.swift in Sources */,
 				4B116E662E26A7C300B45CEC /* ExpenseCardView.swift in Sources */,
+				4B116E722E2FCB0200B45CEC /* OtherBudgetsSectionView.swift in Sources */,
 				4B116E372E22BF8400B45CEC /* QoopApp.swift in Sources */,
 				4B116E642E26A52800B45CEC /* Locale+Extensions.swift in Sources */,
+				4B116E702E2FCA0300B45CEC /* ActiveBudgetsSectionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
