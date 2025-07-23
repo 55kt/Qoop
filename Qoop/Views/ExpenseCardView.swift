@@ -14,38 +14,90 @@ struct ExpenseCardView: View {
     
     // MARK: - Body
     var body: some View {
-        VStack {
-            HStack {
-                Text(expense.emoji ?? EmojiDataModel.defaultEmoji)
-                Text(expense.title ?? "")
-                Text("\(expense.quantity)")
-                
-                Spacer()
-                VStack(alignment: .trailing) {
-                    Text("One item price \(expense.amount, format: .currency(code: Locale.currencyCode))")
-                    Text("Total price \(expense.total, format: .currency(code: Locale.currencyCode))")
-                }// VStack
-            }// Hstack
-            HStack {
-                Text("Created:")
-                Text(expense.dateCreated ?? Date(), style: .date)
-                Spacer()
-            }// HStack
-            .font(.caption)
-            
-            HStack(spacing: 3) {
-                Image(systemName: "location.circle")
-                Text("Purchase location: \(expense.location ?? "")")
-                
-                Spacer()
+        VStack(spacing: 0) {
+            // Main content area
+            VStack(spacing: 4) {
+                // Header with emoji, title and quantity
+                HStack(alignment: .center, spacing: 12) {
+                    // Emoji in circle background
+                    Text(expense.emoji ?? EmojiDataModel.defaultEmoji)
+                        .font(.system(size: 40))
+                        .frame(width: 44, height: 44)
+                        
                     
-            }// Hstack
-            .font(.caption)
-            .foregroundColor(.secondary)
-        }// VStack
-        .contentShape(Rectangle())
-    }// body
-}// View
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(expense.title ?? "")
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.primary)
+                        
+                        Text("Quantity: \(expense.quantity)")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Spacer()
+                    
+                    // Price section
+                    VStack(alignment: .trailing, spacing: 4) {
+                        HStack(spacing: 4) {
+                            Text("Unit:")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Text("\(expense.amount, format: .currency(code: Locale.currencyCode))")
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                        }
+                        
+                        HStack(spacing: 4) {
+                            Text("Total:")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            
+                            Text("\(expense.total, format: .currency(code: Locale.currencyCode))")
+                                .font(.title3)
+                                .fontWeight(.bold)
+                                .foregroundColor(.primary)
+                        }
+                    }
+                }
+                
+                HStack {
+                    
+                    
+                    HStack(spacing: 2) {
+                        Image(systemName: "calendar")
+                            .font(.caption)
+                            .foregroundColor(.blue)
+                        
+                        Text("Created: ")
+                        Text(expense.dateCreated?.formatted(date: .abbreviated, time: .omitted) ?? "")
+                            .font(.caption)
+                            .fontWeight(.medium)
+                    }
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+                    
+                    Spacer()
+
+                    
+                    if let location = expense.location, !location.isEmpty {
+                        HStack(spacing: 2) {
+                            Image(systemName: "location.circle")
+                                .font(.system(size: 14))
+                                .foregroundColor(.green)
+
+                            Text(location)
+                                .font(.caption)
+                                .fontWeight(.medium)
+                                .lineLimit(1)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 // MARK: - Preview Container
 struct ExpenseCellViewContainer: View {
@@ -54,10 +106,18 @@ struct ExpenseCellViewContainer: View {
     
     var body: some View {
         ExpenseCardView(expense: expenses[0])
+            .padding()
     }
 }
 
 #Preview {
     ExpenseCellViewContainer()
         .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        .preferredColorScheme(.light)
+}
+
+#Preview("Dark Mode") {
+    ExpenseCellViewContainer()
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        .preferredColorScheme(.dark)
 }

@@ -63,7 +63,7 @@ struct BudgetListScreen: View {
                     }, expenseViewModel: expenseViewModel
                 )// Other Budgets
                 .transition(.opacity)
-                
+
             }// List
             .listStyle(.plain)
             .animation(.easeInOut(duration: 0.2), value: searchText)

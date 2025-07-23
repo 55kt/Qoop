@@ -13,10 +13,14 @@ struct BudgetDetailScreen: View {
     let budget: Budget
     @FetchRequest(sortDescriptors: []) private var expenses: FetchedResults<Expense>
     @Environment(\.managedObjectContext) private var viewContext
+    @State private var editBudgetIsPresented: Bool = false
     @State private var expenseToEdit: Expense?
     @State private var addExpensePresented: Bool = false
     
-    @StateObject private var viewModel = BudgetViewModel()
+    @StateObject private var budgetViewModel = BudgetViewModel()
+    @StateObject private var expenseViewModel = ExpenseViewModel()
+    
+    
     
     // MARK: - Initializer
     init(budget: Budget) {
@@ -28,35 +32,47 @@ struct BudgetDetailScreen: View {
         // MARK: - Budget Detail Header
         Form {
             
-            Toggle(isOn: Binding(
-                get: { budget.isActive },
-                set: { newValue in
-                    viewModel.setActiveBudget(budget, isActive: newValue, context: viewContext)
-                }
-            )) {
-                Label("Active budget", systemImage: "checkmark.circle.fill")
-            }
-            
-            HStack {
-                Text(budget.emoji ?? EmojiDataModel.defaultEmoji)
+            Section("Budget Details") {
+                Toggle(isOn: Binding(
+                    get: { budget.isActive },
+                    set: { newValue in
+                        budgetViewModel.setActiveBudget(budget, isActive: newValue, context: viewContext)
+                    }
+                )) {
+                    Label("Active budget", systemImage: "checkmark.circle.fill")
+                        .foregroundColor(budget.isActive ? .green : .secondary)
+                }// Activate budget toggle
                 
-                Spacer()
-                Text("Total Limit:")
-                Text(budget.limit, format: .currency(code: Locale.currencyCode))
+                HStack {
+                    Text("💸 Budget")
+                    Spacer()
+                    Text(budget.limit, format: .currency(code: Locale.currencyCode))
+                    
+                }// Total Limit
+                let details = expenseViewModel.calculateBudgetDetails(for: budget)
+
+                HStack {
+                    Text("📦 Remaining")
+                    Spacer()
+                    Text(details.remaining, format: .currency(code: Locale.currencyCode))
+                        .foregroundColor(BudgetCardView.remainingStatusColor(limit: budget.limit, remaining: details.remaining))
+                }// Remaining
                 
-                Spacer()
-            }// HStack
+                HStack {
+                    Text("🧾 Spent")
+                    Spacer()
+                    Text(details.spent, format: .currency(code: Locale.currencyCode))
+                        .foregroundColor(.red)
+                }// Spent
+                
+                Button("Edit Budget") {
+                    editBudgetIsPresented.toggle()
+                }// Edit Button
+            }// Budget Details Section
             
-            Button("Add expense") {
-                addExpensePresented.toggle()
-            }
-            .frame(maxWidth: .infinity)
             
             // MARK: - Expenses List
             Section("Expenses") {
-                
-                // MARK: - Header
-                
                 
                 // MARK: - List
                 ForEach(expenses) { expense in
@@ -68,10 +84,9 @@ struct BudgetDetailScreen: View {
                             .tint(.blue)
                         }
                 }// ForEach
-                .onDelete(perform: deleteExpense)
             }// Expenses List
-        }
-        .navigationTitle(budget.title ?? "")
+        }// Form
+        .navigationTitle("\(budget.title ?? "Budget") \(budget.emoji ?? "")")
         .sheet(item: $expenseToEdit) { expenseToEdit in
             NavigationStack {
                 EditExpenseScreen(expense: expenseToEdit)
@@ -82,20 +97,25 @@ struct BudgetDetailScreen: View {
                 AddExpenseScreen(budget: budget)
             }
         }
+        .sheet(isPresented: $editBudgetIsPresented) {
+            EditBudgetScreen(budget: budget, isPresented: $editBudgetIsPresented)
+        }
+        .toolbar {
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    addExpensePresented.toggle()
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+            
+            ToolbarItem(placement: .topBarLeading) {
+                EditButton()
+            }
+            
+        }// toolbar
     }// body
-    
-    // MARK: - Methods & Functions
-    private func deleteExpense(_ indexSet: IndexSet) {
-        indexSet.forEach { index in
-            let expense = expenses[index]
-            viewContext.delete(expense)
-        }
-        do {
-            try viewContext.save()
-        } catch {
-            print("❌ Failed to delete expense: \(error.localizedDescription)")
-        }
-    }// delete expense function
 }// View
 
 // MARK: - Preview Container

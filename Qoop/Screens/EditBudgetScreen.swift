@@ -1,5 +1,5 @@
 //
-//  BudgetEditScreen.swift
+//  EditBudgetScreen.swift
 //  Qoop
 //
 //  Created by Vlad on 20/7/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BudgetEditScreen: View {
+struct EditBudgetScreen: View {
     // MARK: - Properties
     let budget: Budget
     @Environment(\.managedObjectContext) private var viewContext
@@ -92,6 +92,6 @@ struct BudgetEditScreen: View {
     budget.limit = 100.0
     budget.emoji = "💰"
     @State var isPresented = true
-    return BudgetEditScreen(budget: budget, isPresented: $isPresented)
+    return EditBudgetScreen(budget: budget, isPresented: $isPresented)
         .environment(\.managedObjectContext, context)
 }
