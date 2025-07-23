@@ -36,7 +36,7 @@ struct BudgetCardView: View {
                 HStack(spacing: 3) {
                     Text(remaining, format: .currency(code: Locale.currencyCode))
                         .foregroundColor(statusColor)
-                    Text(" / \(budget.limit, format: .currency(code: Locale.currencyCode))")
+                    Text(" from \(budget.limit, format: .currency(code: Locale.currencyCode))")
                 }
                 .font(.subheadline)
                 

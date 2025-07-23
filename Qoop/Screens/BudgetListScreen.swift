@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct BudgetListScreen: View {
     // MARK: - Properties
     @FetchRequest(
@@ -49,6 +47,7 @@ struct BudgetListScreen: View {
                         viewModel.moveBudgets(budgets: active, fromOffsets: indices, toOffset: newOffset, context: viewContext)
                     }, expenseViewModel: expenseViewModel
                 )// Active Budgets
+                .transition(.opacity)
                 
                 // MARK: - Other Budgets
                 OtherBudgetsSectionView(
@@ -63,8 +62,11 @@ struct BudgetListScreen: View {
                         viewModel.moveBudgets(budgets: other, fromOffsets: indices, toOffset: newOffset, context: viewContext)
                     }, expenseViewModel: expenseViewModel
                 )// Other Budgets
+                .transition(.opacity)
+                
             }// List
             .listStyle(.plain)
+            .animation(.easeInOut(duration: 0.2), value: searchText)
             .navigationTitle("Budgets")
             .searchable(text: $searchText)
             .toolbar {
