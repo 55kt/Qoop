@@ -10,68 +10,89 @@ import SwiftUI
 struct AddExpenseScreen: View {
     // MARK: - Properties
     let budget: Budget
+
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.dismiss) private var dismiss
+
+    @ObservedObject var viewModel: ExpenseViewModel
+
     @State private var title: String = ""
     @State private var amount: Double?
     @State private var quantity: Int?
     @State private var location: String = ""
     @State private var emoji: String = "💸"
-    
+
     @State private var errorMessage: String = ""
-    
-    private var isFormValid: Bool {
-        !title.isEmptyOrWhitespace && amount != nil && Double(amount!) > 0 && quantity != nil && Int(quantity!) > 0
-    }
-    
+
     // MARK: - Body
     var body: some View {
-        Form {
-            Section(header: Text("New Expense")) {
-                TextField("Title", text: $title)
-                TextField("Amount", value: $amount, format: .number)
-                    .keyboardType(.numberPad)
-                TextField("Quantity", value: $quantity, format: .number)
-                TextField("Location", text: $location)
-                
+        NavigationStack {
+            Form {
+                Section {
+                    TextField("Title", text: $title)
+
+                    TextField("Amount", value: $amount, format: .number)
+                        .keyboardType(.decimalPad)
+
+                    TextField("Quantity (Optional)", value: $quantity, format: .number)
+                        .keyboardType(.numberPad)
+
+                    TextField("Location (Optional)", text: $location)
+                }
+                .padding(10)
+
                 EmojiPickerRow(title: "Select emoji", selection: $emoji)
-                
-                Button {
-                    if !Expense.exists(context: viewContext, title: title, budget: budget) {
-                        guard let unwrappedAmount = amount, let unwrappedQuantity = quantity else {
-                            errorMessage = "❌ Amount or quantity is missing"
-                            return
-                        }
-                        do {
-                            try ExpenseViewModel.addExpense(title: title, amount: unwrappedAmount, quantity: unwrappedQuantity, emoji: emoji, location: location, budget: budget, context: viewContext)
-                            title = ""
-                            amount = nil
-                            quantity = nil
-                            location = ""
-                            emoji = "💸"
-                            errorMessage = ""
-                        } catch {
-                            print("❌ Failed to save expense: \(error.localizedDescription)")
-                            errorMessage = "❌ Failed to save expense: \(error.localizedDescription)"
-                        }
-                    } else {
-                        print("❌ Expense with title \(title) already exists")
-                        errorMessage = "❌ Expense with title \(title) already exists"
+                    .frame(maxWidth: .infinity)
+            }
+            .navigationTitle("Add Expense")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
                     }
-                } label: {
-                    Text("Save")
-                }// Save button
-                .frame(maxWidth: .infinity)
-                .disabled(!isFormValid)
-                
+                }
+
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        do {
+                            try viewModel.addExpense(
+                                title: title,
+                                amount: amount ?? 0,
+                                quantity: quantity,
+                                emoji: emoji,
+                                location: location,
+                                budget: budget,
+                                context: viewContext
+                            )
+                            dismiss()
+                        } catch {
+                            errorMessage = error.localizedDescription
+                        }
+                    }
+                    .disabled(!viewModel.addExpenseIsFormValid(title: title, amount: amount ?? 0))
+                }
+            }
+            .alert("Error", isPresented: .constant(!errorMessage.isEmpty)) {
+                Button("OK", role: .cancel) {
+                    errorMessage = ""
+                }
+            } message: {
                 Text(errorMessage)
-            }// Section
-        }// Form
-    }// View
+            }
+        }
+    }
 }// View
 
 // MARK: - Preview
 #Preview {
-    NavigationStack {
-        AddExpenseScreen(budget: Budget())
+    let context = PersistenceController.preview.container.viewContext
+    let sampleBudget = Budget(context: context)
+    sampleBudget.title = "Groceries"
+    sampleBudget.limit = 500
+
+    return NavigationStack {
+        AddExpenseScreen(budget: sampleBudget, viewModel: ExpenseViewModel())
+            .environment(\.managedObjectContext, context)
     }
 }

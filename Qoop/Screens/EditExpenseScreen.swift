@@ -23,13 +23,17 @@ struct EditExpenseScreen: View {
     
     var body: some View {
         Form {
-            TextField("Title", text: $expenseTitle)
-            TextField("Amount", value: $expenseAmount, format: .number)
-                .keyboardType(.numberPad)
-            TextField("Quantity", value: $expenseQuantity, format: .number)
-            TextField("Location", text: $expenseLocation)
+            Section {
+                TextField("Title", text: $expenseTitle)
+                TextField("Amount", value: $expenseAmount, format: .number)
+                    .keyboardType(.numberPad)
+                TextField("Quantity", value: $expenseQuantity, format: .number)
+                TextField("Location", text: $expenseLocation)
+            }
+            .padding(10)
             
             EmojiPickerRow(title: "Select emoji", selection: $expenseEmoji)
+                .frame(maxWidth: .infinity)
         }// Form
         .onAppear {
             expenseTitle = expense.title ?? ""
@@ -44,8 +48,14 @@ struct EditExpenseScreen: View {
                     updateExpense()
                 }
             }
+            ToolbarItem(placement: .topBarLeading) {
+                Button("Cancel") {
+                    dismiss()
+                }
+            }
         }// toolbar
-        .navigationTitle(expense.title ?? "")
+        .navigationTitle("Edit Expense")
+        .navigationBarTitleDisplayMode(.inline)
     }// body
     
     // MARK: - Methods & Functions

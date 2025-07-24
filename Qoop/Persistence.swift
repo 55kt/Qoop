@@ -32,7 +32,7 @@ struct PersistenceController {
         let milk = Expense(context: viewContext)
         milk.title = "Milk"
         milk.amount = 3.49
-        milk.quantity = 2
+        milk.quantity = 5000
         milk.location = "Milk Shop"
         milk.emoji = emojiData.emoji["milk"] ?? EmojiDataModel.defaultEmoji
         milk.dateCreated = Date()

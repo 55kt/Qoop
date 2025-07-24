@@ -83,6 +83,11 @@ struct BudgetDetailScreen: View {
                             }
                             .tint(.blue)
                         }
+                        .swipeActions(edge: .trailing) {
+                            Button(("Delete"), role: .destructive) {
+                                expenseViewModel.deleteExpense(expense, context: viewContext)
+                            }
+                        }
                 }// ForEach
             }// Expenses List
         }// Form
@@ -94,11 +99,13 @@ struct BudgetDetailScreen: View {
         }// sheet
         .sheet(isPresented: $addExpensePresented) {
             NavigationStack {
-                AddExpenseScreen(budget: budget)
+                AddExpenseScreen(budget: budget, viewModel: expenseViewModel)
+                    .presentationDetents([.fraction(0.60)])
             }
         }
         .sheet(isPresented: $editBudgetIsPresented) {
             EditBudgetScreen(budget: budget, isPresented: $editBudgetIsPresented)
+                .presentationDetents([.fraction(0.60)])
         }
         .toolbar {
             
@@ -109,11 +116,6 @@ struct BudgetDetailScreen: View {
                     Image(systemName: "plus")
                 }
             }
-            
-            ToolbarItem(placement: .topBarLeading) {
-                EditButton()
-            }
-            
         }// toolbar
     }// body
 }// View

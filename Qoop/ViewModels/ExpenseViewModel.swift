@@ -11,7 +11,7 @@ import CoreData
 @MainActor
 final class ExpenseViewModel: ObservableObject {
     
-    static func addExpense(title: String, amount: Double, quantity: Int?, emoji: String, location: String, budget: Budget, context: NSManagedObjectContext) throws {
+    func addExpense(title: String, amount: Double, quantity: Int?, emoji: String, location: String, budget: Budget, context: NSManagedObjectContext) throws {
         guard !title.isEmptyOrWhitespace, amount > 0, (quantity ?? 0) > 0, !location.isEmpty else {
             throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid input"])
         }
@@ -33,6 +33,10 @@ final class ExpenseViewModel: ObservableObject {
             context.rollback()
             throw error
         }
+    }
+    
+    func addExpenseIsFormValid(title: String, amount: Double) -> Bool {
+        return !title.isEmptyOrWhitespace && amount > 0
     }
     
     func deleteExpense(_ expense: Expense, context: NSManagedObjectContext) {

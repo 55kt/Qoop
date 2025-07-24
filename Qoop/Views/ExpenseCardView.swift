@@ -15,11 +15,8 @@ struct ExpenseCardView: View {
     // MARK: - Body
     var body: some View {
         VStack(spacing: 0) {
-            // Main content area
             VStack(spacing: 4) {
-                // Header with emoji, title and quantity
-                HStack(alignment: .center, spacing: 12) {
-                    // Emoji in circle background
+                HStack(alignment: .center, spacing: 0) {
                     Text(expense.emoji ?? EmojiDataModel.defaultEmoji)
                         .font(.system(size: 40))
                         .frame(width: 44, height: 44)
@@ -41,7 +38,7 @@ struct ExpenseCardView: View {
                     // Price section
                     VStack(alignment: .trailing, spacing: 4) {
                         HStack(spacing: 4) {
-                            Text("Unit:")
+                            Text("Price per unit:")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                             Text("\(expense.amount, format: .currency(code: Locale.currencyCode))")
