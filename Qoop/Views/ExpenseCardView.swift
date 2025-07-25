@@ -31,7 +31,7 @@ struct ExpenseCardView: View {
                         Text("Quantity: \(expense.quantity)")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
-                    }
+                    }// VStack
                     
                     Spacer()
                     
@@ -44,7 +44,7 @@ struct ExpenseCardView: View {
                             Text("\(expense.amount, format: .currency(code: Locale.currencyCode))")
                                 .font(.subheadline)
                                 .fontWeight(.medium)
-                        }
+                        }// HStack
                         
                         HStack(spacing: 4) {
                             Text("Total:")
@@ -55,9 +55,9 @@ struct ExpenseCardView: View {
                                 .font(.title3)
                                 .fontWeight(.bold)
                                 .foregroundColor(.primary)
-                        }
-                    }
-                }
+                        }// HStack
+                    }// VStack
+                }// HStack
                 
                 HStack {
                     
@@ -75,10 +75,10 @@ struct ExpenseCardView: View {
                     .font(.caption2)
                     .foregroundColor(.secondary)
                     
-                    Spacer()
-
-                    
                     if let location = expense.location, !location.isEmpty {
+                        
+                        Spacer()
+
                         HStack(spacing: 2) {
                             Image(systemName: "location.circle")
                                 .font(.system(size: 14))
@@ -88,13 +88,13 @@ struct ExpenseCardView: View {
                                 .font(.caption)
                                 .fontWeight(.medium)
                                 .lineLimit(1)
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+                        }// HStack
+                    }// if let location
+                }// HStack
+            }// VStack
+        }// VStack
+    }// body
+}// View
 
 // MARK: - Preview Container
 struct ExpenseCellViewContainer: View {

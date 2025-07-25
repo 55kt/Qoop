@@ -33,6 +33,7 @@
 		4B116E6E2E2D429700B45CEC /* EditBudgetScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E6D2E2D429700B45CEC /* EditBudgetScreen.swift */; };
 		4B116E702E2FCA0300B45CEC /* ActiveBudgetsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E6F2E2FCA0300B45CEC /* ActiveBudgetsSectionView.swift */; };
 		4B116E722E2FCB0200B45CEC /* OtherBudgetsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E712E2FCB0200B45CEC /* OtherBudgetsSectionView.swift */; };
+		4B116E772E340A4F00B45CEC /* ExpenseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E762E340A4F00B45CEC /* ExpenseError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		4B116E6D2E2D429700B45CEC /* EditBudgetScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBudgetScreen.swift; sourceTree = "<group>"; };
 		4B116E6F2E2FCA0300B45CEC /* ActiveBudgetsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveBudgetsSectionView.swift; sourceTree = "<group>"; };
 		4B116E712E2FCB0200B45CEC /* OtherBudgetsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherBudgetsSectionView.swift; sourceTree = "<group>"; };
+		4B116E762E340A4F00B45CEC /* ExpenseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 				4B116E452E22C5B400B45CEC /* Screens */,
 				4B116E522E241A2A00B45CEC /* Views */,
 				4B116E4D2E23F3C800B45CEC /* ViewModels */,
+				4B116E752E340A2C00B45CEC /* Errors */,
 				4B116E4A2E22EA0600B45CEC /* Extensions */,
 				4B116E552E24227D00B45CEC /* EmojiPicker */,
 				4B116E2E2E22BF8400B45CEC /* Persistence.swift */,
@@ -218,6 +221,14 @@
 				4B116E5B2E242CD300B45CEC /* EmojiPickerRow.swift */,
 			);
 			path = EmojiPicker;
+			sourceTree = "<group>";
+		};
+		4B116E752E340A2C00B45CEC /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				4B116E762E340A4F00B45CEC /* ExpenseError.swift */,
+			);
+			path = Errors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -357,6 +368,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B116E6A2E27F9FD00B45CEC /* EditExpenseScreen.swift in Sources */,
+				4B116E772E340A4F00B45CEC /* ExpenseError.swift in Sources */,
 				4B116E512E2405A100B45CEC /* Budget+Extensions.swift in Sources */,
 				4B116E492E22E5C700B45CEC /* AddBudgetScreen.swift in Sources */,
 				4B116E5C2E242CD300B45CEC /* EmojiPickerRow.swift in Sources */,

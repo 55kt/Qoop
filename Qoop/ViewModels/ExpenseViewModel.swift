@@ -11,9 +11,17 @@ import CoreData
 @MainActor
 final class ExpenseViewModel: ObservableObject {
     
-    func addExpense(title: String, amount: Double, quantity: Int?, emoji: String, location: String, budget: Budget, context: NSManagedObjectContext) throws {
-        guard !title.isEmptyOrWhitespace, amount > 0, (quantity ?? 0) > 0, !location.isEmpty else {
-            throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid input"])
+    @Published var errorMessage: String?
+    @Published var showErrorAlert: Bool = false
+        
+    func handle(error: Error) {
+        errorMessage = error.localizedDescription
+        showErrorAlert = true
+    }
+    
+    func addExpense(title: String, amount: Double, quantity: Int?, emoji: String, location: String?, budget: Budget, context: NSManagedObjectContext) throws {
+        guard !title.isEmptyOrWhitespace, amount > 0, (quantity ?? 0) > 0 else {
+            throw ExpenseError.invalidInput
         }
         
         let newExpense = Expense(context: context)
@@ -21,7 +29,7 @@ final class ExpenseViewModel: ObservableObject {
         newExpense.amount = amount
         newExpense.quantity = Int16(quantity ?? 0)
         newExpense.emoji = emoji
-        newExpense.location = location
+        newExpense.location = location ?? ""
         newExpense.dateCreated = Date()
         
         let expensesSet = budget.mutableSetValue(forKey: "expenses")
@@ -31,22 +39,51 @@ final class ExpenseViewModel: ObservableObject {
             try context.save()
         } catch {
             context.rollback()
-            throw error
+            throw ExpenseError.failedToSave
         }
     }
     
-    func addExpenseIsFormValid(title: String, amount: Double) -> Bool {
-        return !title.isEmptyOrWhitespace && amount > 0
+    func isExpenseFormValid(title: String, amount: Double?, quantity: Int?) -> Bool {
+        guard let amount = amount, amount > 0 else { return false }
+        guard let quantity = quantity, quantity > 0 else { return false }
+        return !title.isEmptyOrWhitespace
     }
     
-    func deleteExpense(_ expense: Expense, context: NSManagedObjectContext) {
+    func editExpense(
+        _ expense: Expense,
+        newTitle: String,
+        newAmount: Double,
+        newQuantity: Int?,
+        newLocation: String?,
+        newEmoji: String,
+        context: NSManagedObjectContext
+    ) throws {
+        guard !newTitle.isEmptyOrWhitespace, newAmount > 0, (newQuantity ?? 0) > 0 else {
+            throw ExpenseError.invalidInput
+        }
+        
+        expense.title = newTitle
+        expense.amount = newAmount
+        expense.quantity = Int16(newQuantity ?? 0)
+        expense.location = newLocation ?? ""
+        expense.emoji = newEmoji
+        
+        do {
+            try context.save()
+        } catch {
+            context.rollback()
+            throw ExpenseError.failedToEdit
+        }
+    }
+    
+    func deleteExpense(_ expense: Expense, context: NSManagedObjectContext) throws {
         context.delete(expense)
         if let budget = expense.budget {
             do {
                 try context.save()
                 context.refresh(budget, mergeChanges: true)
             } catch {
-                print("Failed to delete expense: \(error.localizedDescription)")
+                throw ExpenseError.failedToDelete
             }
         }
     }

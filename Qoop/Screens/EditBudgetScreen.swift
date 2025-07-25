@@ -48,11 +48,6 @@ struct EditBudgetScreen: View {
                 EmojiPickerRow(title: "Edit emoji", selection: $emoji)
                     .frame(maxWidth: .infinity)
                 
-                if let error = errorMessage ?? viewModel.errorMessage {
-                    Text(error)
-                        .foregroundStyle(.red)
-                        .padding(.top, 5)
-                }// if let error
             }// Form
             .navigationTitle("Edit Budget")
             .navigationBarTitleDisplayMode(.inline)

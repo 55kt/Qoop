@@ -10,40 +10,38 @@ import SwiftUI
 struct AddExpenseScreen: View {
     // MARK: - Properties
     let budget: Budget
-
+    
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
-
+    
     @ObservedObject var viewModel: ExpenseViewModel
-
+    
     @State private var title: String = ""
     @State private var amount: Double?
     @State private var quantity: Int?
     @State private var location: String = ""
     @State private var emoji: String = "💸"
-
-    @State private var errorMessage: String = ""
-
+    
     // MARK: - Body
     var body: some View {
         NavigationStack {
             Form {
                 Section {
                     TextField("Title", text: $title)
-
+                    
                     TextField("Amount", value: $amount, format: .number)
                         .keyboardType(.decimalPad)
-
-                    TextField("Quantity (Optional)", value: $quantity, format: .number)
+                    
+                    TextField("Quantity", value: $quantity, format: .number)
                         .keyboardType(.numberPad)
-
+                    
                     TextField("Location (Optional)", text: $location)
-                }
+                }// Fields section
                 .padding(10)
-
+                
                 EmojiPickerRow(title: "Select emoji", selection: $emoji)
                     .frame(maxWidth: .infinity)
-            }
+            }// Form
             .navigationTitle("Add Expense")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -52,9 +50,13 @@ struct AddExpenseScreen: View {
                         dismiss()
                     }
                 }
-
+                
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
+                        guard viewModel.isExpenseFormValid(title: title, amount: amount, quantity: quantity) else {
+                            viewModel.handle(error: ExpenseError.invalidInput)
+                            return
+                        }
                         do {
                             try viewModel.addExpense(
                                 title: title,
@@ -67,21 +69,19 @@ struct AddExpenseScreen: View {
                             )
                             dismiss()
                         } catch {
-                            errorMessage = error.localizedDescription
+                            viewModel.handle(error: error)
                         }
                     }
-                    .disabled(!viewModel.addExpenseIsFormValid(title: title, amount: amount ?? 0))
+                    .disabled(!viewModel.isExpenseFormValid(title: title, amount: amount ?? 0, quantity: quantity))
                 }
-            }
-            .alert("Error", isPresented: .constant(!errorMessage.isEmpty)) {
-                Button("OK", role: .cancel) {
-                    errorMessage = ""
-                }
+            }// toolbar
+            .alert("Error", isPresented: $viewModel.showErrorAlert) {
+                Button("OK", role: .cancel) { }
             } message: {
-                Text(errorMessage)
-            }
-        }
-    }
+                Text(viewModel.errorMessage ?? "")
+            }// alert
+        }// NavigationStack
+    }// body
 }// View
 
 // MARK: - Preview
@@ -90,7 +90,7 @@ struct AddExpenseScreen: View {
     let sampleBudget = Budget(context: context)
     sampleBudget.title = "Groceries"
     sampleBudget.limit = 500
-
+    
     return NavigationStack {
         AddExpenseScreen(budget: sampleBudget, viewModel: ExpenseViewModel())
             .environment(\.managedObjectContext, context)

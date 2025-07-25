@@ -85,7 +85,11 @@ struct BudgetDetailScreen: View {
                         }
                         .swipeActions(edge: .trailing) {
                             Button(("Delete"), role: .destructive) {
-                                expenseViewModel.deleteExpense(expense, context: viewContext)
+                                do {
+                                   try expenseViewModel.deleteExpense(expense, context: viewContext)
+                                } catch {
+                                    expenseViewModel.handle(error: error)
+                                }
                             }
                         }
                 }// ForEach
