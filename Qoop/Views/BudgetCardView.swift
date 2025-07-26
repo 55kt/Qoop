@@ -9,18 +9,19 @@ import SwiftUI
 
 struct BudgetCardView: View {
     // MARK: - Properties
-    let budget: Budget
+    @ObservedObject var budget: Budget
     @ObservedObject var expenseViewModel: ExpenseViewModel
-    private let statusColor: Color
-    private let (spent, remaining): (Double, Double)
     
-    init(budget: Budget, expenseViewModel: ExpenseViewModel) {
-        self.budget = budget
-        self.expenseViewModel = expenseViewModel
-        let details = expenseViewModel.calculateBudgetDetails(for: budget)
-        self.spent = details.spent
-        self.remaining = details.remaining
-        self.statusColor = Self.remainingStatusColor(limit: budget.limit, remaining: remaining)
+    private var spent: Double {
+        expenseViewModel.calculateBudgetDetails(for: budget).spent
+    }
+
+    private var remaining: Double {
+        expenseViewModel.calculateBudgetDetails(for: budget).remaining
+    }
+
+    private var statusColor: Color {
+        Self.remainingStatusColor(limit: budget.limit, remaining: remaining)
     }
     
     // MARK: - Body
@@ -187,7 +188,7 @@ struct BudgetCardView: View {
                 budget2.emoji = "🎬"
                 budget2.dateCreated = Calendar.current.date(byAdding: .day, value: -5, to: Date())
                 budget2.isActive = false
-
+                
                 return VStack(spacing: 16) {
                     BudgetCardView(budget: budget1, expenseViewModel: viewModel)
                     BudgetCardView(budget: budget2, expenseViewModel: viewModel)
@@ -196,7 +197,7 @@ struct BudgetCardView: View {
             }
         }
     }
-
+    
     return PreviewContainer()
         .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
@@ -213,12 +214,12 @@ struct BudgetCardView: View {
             budget.emoji = "🛍️"
             budget.dateCreated = Date()
             budget.isActive = true
-
+            
             return BudgetCardView(budget: budget, expenseViewModel: viewModel)
                 .padding()
         }
     }
-
+    
     return PreviewContainer()
         .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
         .preferredColorScheme(.dark)

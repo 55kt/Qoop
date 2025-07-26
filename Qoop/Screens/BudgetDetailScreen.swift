@@ -10,7 +10,7 @@ import SwiftUI
 struct BudgetDetailScreen: View {
     
     // MARK: - Properties
-    let budget: Budget
+    @ObservedObject var budget: Budget
     
     @FetchRequest private var expenses: FetchedResults<Expense>
     
