@@ -40,11 +40,11 @@ struct BudgetListScreen: View {
                     budgets: filteredBudgets.filter { $0.isActive },
                     onDelete: { indexSet in
                         let active = filteredBudgets.filter { $0.isActive }
-                        viewModel.deleteBudget(offsets: indexSet, budgets: active, context: viewContext)
+                        try? viewModel.deleteBudget(offsets: indexSet, budgets: active, context: viewContext)
                     },
                     onMove: { indices, newOffset in
                         let active = filteredBudgets.filter { $0.isActive }
-                        viewModel.moveBudgets(budgets: active, fromOffsets: indices, toOffset: newOffset, context: viewContext)
+                        try? viewModel.moveBudgets(budgets: active, fromOffsets: indices, toOffset: newOffset, context: viewContext)
                     }, expenseViewModel: expenseViewModel
                 )// Active Budgets
                 .transition(.opacity)
@@ -55,15 +55,16 @@ struct BudgetListScreen: View {
                     showHeader: filteredBudgets.contains { $0.isActive },
                     onDelete: { indexSet in
                         let other = filteredBudgets.filter { !$0.isActive }
-                        viewModel.deleteBudget(offsets: indexSet, budgets: other, context: viewContext)
+                        try? viewModel.deleteBudget(offsets: indexSet, budgets: other, context: viewContext)
                     },
                     onMove: { indices, newOffset in
                         let other = filteredBudgets.filter { !$0.isActive }
-                        viewModel.moveBudgets(budgets: other, fromOffsets: indices, toOffset: newOffset, context: viewContext)
+                        try? viewModel.moveBudgets(budgets: other, fromOffsets: indices, toOffset: newOffset, context: viewContext)
                     }, expenseViewModel: expenseViewModel
                 )// Other Budgets
                 .transition(.opacity)
 
+                Spacer()
             }// List
             .listStyle(.plain)
             .animation(.easeInOut(duration: 0.2), value: searchText)
@@ -85,7 +86,7 @@ struct BudgetListScreen: View {
                 
             }// toolbar
             .sheet(isPresented: $isPresented) {
-                AddBudgetScreen(viewModel: viewModel, isPresented: $isPresented)
+                AddBudgetScreen(viewModel: viewModel, existingBudgets: Array(budgets))
                     .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
                     .presentationDetents([.fraction(0.60)])
             }// Add budget sheet

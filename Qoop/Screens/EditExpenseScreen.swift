@@ -45,6 +45,8 @@ struct EditExpenseScreen: View {
             EmojiPickerRow(title: "Select emoji", selection: $emoji)
                 .frame(maxWidth: .infinity)
         }// Form
+        .navigationTitle("Edit Expense")
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Edit") {
@@ -64,6 +66,7 @@ struct EditExpenseScreen: View {
                     }
                 }
             }
+            
             ToolbarItem(placement: .topBarLeading) {
                 Button("Cancel") {
                     dismiss()
@@ -75,8 +78,6 @@ struct EditExpenseScreen: View {
         } message: {
             Text(viewModel.errorMessage ?? "Unknown error")
         }
-        .navigationTitle("Edit Expense")
-        .navigationBarTitleDisplayMode(.inline)
     }// body
 }// View
 

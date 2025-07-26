@@ -34,6 +34,7 @@
 		4B116E702E2FCA0300B45CEC /* ActiveBudgetsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E6F2E2FCA0300B45CEC /* ActiveBudgetsSectionView.swift */; };
 		4B116E722E2FCB0200B45CEC /* OtherBudgetsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E712E2FCB0200B45CEC /* OtherBudgetsSectionView.swift */; };
 		4B116E772E340A4F00B45CEC /* ExpenseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E762E340A4F00B45CEC /* ExpenseError.swift */; };
+		4B116E792E351A6D00B45CEC /* BudgetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E782E351A6D00B45CEC /* BudgetError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,7 @@
 		4B116E6F2E2FCA0300B45CEC /* ActiveBudgetsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveBudgetsSectionView.swift; sourceTree = "<group>"; };
 		4B116E712E2FCB0200B45CEC /* OtherBudgetsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherBudgetsSectionView.swift; sourceTree = "<group>"; };
 		4B116E762E340A4F00B45CEC /* ExpenseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseError.swift; sourceTree = "<group>"; };
+		4B116E782E351A6D00B45CEC /* BudgetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				4B116E762E340A4F00B45CEC /* ExpenseError.swift */,
+				4B116E782E351A6D00B45CEC /* BudgetError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				4B116E352E22BF8400B45CEC /* Persistence.swift in Sources */,
 				4B116E542E241A4700B45CEC /* BudgetCardView.swift in Sources */,
 				4B116E362E22BF8400B45CEC /* Qoop.xcdatamodeld in Sources */,
+				4B116E792E351A6D00B45CEC /* BudgetError.swift in Sources */,
 				4B116E5A2E24294A00B45CEC /* EmojiPickerView.swift in Sources */,
 				4B116E662E26A7C300B45CEC /* ExpenseCardView.swift in Sources */,
 				4B116E722E2FCB0200B45CEC /* OtherBudgetsSectionView.swift in Sources */,

@@ -71,17 +71,6 @@ struct BudgetCardView: View {
                         // Budget amounts
                         VStack(alignment: .leading, spacing: 4) {
                             HStack {
-                                Text("Remaining:")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                
-                                Text(remaining, format: .currency(code: Locale.currencyCode))
-                                    .font(.title3)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(statusColor)
-                            }
-                            
-                            HStack {
                                 Text("Budget:")
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
@@ -90,6 +79,17 @@ struct BudgetCardView: View {
                                     .font(.subheadline)
                                     .fontWeight(.medium)
                                     .foregroundColor(.primary)
+                            }
+                            
+                            HStack {
+                                Text("Remaining:")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                
+                                Text(remaining, format: .currency(code: Locale.currencyCode))
+                                    .font(.title3)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(statusColor)
                             }
                         }
                     }
@@ -174,7 +174,6 @@ struct BudgetCardView: View {
         
         var body: some View {
             VStack(spacing: 16) {
-                // Активный бюджет с хорошим остатком
                 let budget1 = Budget(context: context)
                 budget1.title = "Groceries"
                 budget1.limit = 500
@@ -182,7 +181,6 @@ struct BudgetCardView: View {
                 budget1.dateCreated = Date()
                 budget1.isActive = true
                 
-                // Бюджет с низким остатком
                 let budget2 = Budget(context: context)
                 budget2.title = "Entertainment"
                 budget2.limit = 200

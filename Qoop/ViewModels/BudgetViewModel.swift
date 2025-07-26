@@ -14,123 +14,127 @@ final class BudgetViewModel: ObservableObject {
     
     @Published var errorMessage: String? = nil
     @Published var showErrorAlert: Bool = false
-    @Environment(\.managedObjectContext) private var viewContext
     
-    func addBudget(title: String, limit: Double, emoji: String, context: NSManagedObjectContext) {
+    func handle(error: Error) {
+        errorMessage = error.localizedDescription
+        showErrorAlert = true
+    }
+    
+    func addBudget(title: String, limit: Double, emoji: String, context: NSManagedObjectContext) throws {
         guard !title.isEmptyOrWhitespace, limit > 0 else {
-            errorMessage = "Title or limit is invalid"
-            showErrorAlert = true
-            return
+            throw BudgetError.invalidInput
         }
         
         let fetchRequest = Budget.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "title == %@", title)
         
+        let existing = try context.fetch(fetchRequest)
+        if !existing.isEmpty {
+            throw BudgetError.duplicateTitle
+        }
+        
+        let newBudget = Budget(context: context)
+        newBudget.title = title
+        newBudget.limit = limit
+        newBudget.emoji = emoji
+        newBudget.dateCreated = Date()
         do {
-            let existing = try context.fetch(fetchRequest)
-            if !existing.isEmpty {
-                errorMessage = "Budget with this title already exists"
-                showErrorAlert = true
-                return
-            }
-            
-            let newBudget = Budget(context: context)
-            newBudget.title = title
-            newBudget.limit = limit
-            newBudget.emoji = emoji
-            newBudget.dateCreated = Date()
-            
             try context.save()
         } catch {
             context.rollback()
-            errorMessage = "Failed to save budget: \(error.localizedDescription)"
-            showErrorAlert = true
+            throw BudgetError.failedToSave
         }
     }
     
-    func deleteBudget(offsets: IndexSet, budgets: [Budget], context: NSManagedObjectContext) {
+    func isBudgetFormValid(title: String, limit: Double?, existingBudgets: [Budget], currentBudget: Budget? = nil) -> Bool {
+        guard let limit = limit, limit > 0, !title.isEmptyOrWhitespace else {
+            return false
+        }
+        
+        let normalizedTitle = title.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        let hasDuplicate = existingBudgets.contains {
+            $0 != currentBudget && ($0.title?.lowercased().trimmingCharacters(in: .whitespacesAndNewlines) == normalizedTitle)
+        }
+        
+        return !hasDuplicate
+    }
+    
+    func editBudget(_ budget: Budget, newTitle: String, newLimit: Double, newEmoji: String, context: NSManagedObjectContext) throws {
+        guard !newTitle.isEmptyOrWhitespace, newLimit > 0 else {
+            throw BudgetError.invalidInput
+        }
+        
+        let fetchRequest = Budget.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "title == %@", newTitle)
+        
+        let existing = try context.fetch(fetchRequest)
+        let isDuplicate = existing.contains { $0 != budget }
+        if isDuplicate {
+            throw BudgetError.duplicateTitle
+        }
+        
+        budget.title = newTitle
+        budget.limit = newLimit
+        budget.emoji = newEmoji
+        
+        do {
+            try context.save()
+        } catch {
+            context.rollback()
+            throw BudgetError.failedToEdit
+        }
+    }
+    
+    func deleteBudget(offsets: IndexSet, budgets: [Budget], context: NSManagedObjectContext) throws {
         offsets.forEach { index in
-            let budget = budgets[index]
-            context.delete(budget)
+            context.delete(budgets[index])
         }
         
         do {
             try context.save()
         } catch {
-            errorMessage = "❌ Failed to delete budget: \(error.localizedDescription)"
-            showErrorAlert = true
+            throw BudgetError.failedToDelete
         }
     }
     
-    func editBudget(_ budget: Budget, newTitle: String, newLimit: Double, newEmoji: String, context: NSManagedObjectContext) {
-            guard !newTitle.isEmptyOrWhitespace, newLimit > 0 else {
-                errorMessage = "Invalid input"
-                showErrorAlert = true
-                return
-            }
-
-            let fetchRequest = Budget.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "title == %@", newTitle)
-
-            do {
-                let existing = try context.fetch(fetchRequest)
-                let isDuplicate = existing.contains { $0 != budget }
-                if isDuplicate {
-                    errorMessage = "Budget with this title already exists"
-                    showErrorAlert = true
-                    return
-                }
-
-                budget.title = newTitle
-                budget.limit = newLimit
-                budget.emoji = newEmoji
-
-                try context.save()
-            } catch {
-                context.rollback()
-                errorMessage = "Failed to update budget: \(error.localizedDescription)"
-                showErrorAlert = true
-            }
-        }
     
-    func moveBudgets(budgets: [Budget], fromOffsets: IndexSet, toOffset: Int, context: NSManagedObjectContext) {
+    
+    func moveBudgets(budgets: [Budget], fromOffsets: IndexSet, toOffset: Int, context: NSManagedObjectContext) throws {
         var reordered = budgets
         reordered.move(fromOffsets: fromOffsets, toOffset: toOffset)
-
+        
         for (index, budget) in reordered.enumerated() {
             budget.orderIndex = Int64(index)
         }
-
+        
         do {
             try context.save()
         } catch {
-            errorMessage = "❌ Failed to reorder budgets: \(error.localizedDescription)"
-            showErrorAlert = true
+            context.rollback()
+            throw BudgetError.failedToReorder
         }
     }
     
-    func setActiveBudget(_ budget: Budget, isActive: Bool, context: NSManagedObjectContext) {
+    func setActiveBudget(_ budget: Budget, isActive: Bool, context: NSManagedObjectContext) throws {
         budget.isActive = isActive
         
         do {
             try context.save()
         } catch {
             context.rollback()
-            errorMessage = "Failed to update active status: \(error.localizedDescription)"
-            showErrorAlert = true
+            throw BudgetError.failedToActivate
         }
     }
     
     func searchBudgets(_ searchText: String, in budgets: [Budget]) -> [Budget] {
-        guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            return budgets
-        }
+            let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !trimmed.isEmpty else { return budgets }
 
-        return budgets.filter { budget in
-            let lowercasedQuery = searchText.lowercased()
-
-            return (budget.title?.lowercased().contains(lowercasedQuery) ?? false) ||
-                   (budget.emoji?.lowercased().contains(lowercasedQuery) ?? false)
+            let lowercasedQuery = trimmed.lowercased()
+            return budgets.filter {
+                ($0.title?.lowercased().contains(lowercasedQuery) ?? false) ||
+                ($0.emoji?.lowercased().contains(lowercasedQuery) ?? false)
+            }
         }
-    }
 }

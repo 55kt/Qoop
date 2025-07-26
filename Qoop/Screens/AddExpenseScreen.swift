@@ -45,12 +45,6 @@ struct AddExpenseScreen: View {
             .navigationTitle("Add Expense")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
-                }
-                
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
                         guard viewModel.isExpenseFormValid(title: title, amount: amount, quantity: quantity) else {
@@ -73,6 +67,12 @@ struct AddExpenseScreen: View {
                         }
                     }
                     .disabled(!viewModel.isExpenseFormValid(title: title, amount: amount ?? 0, quantity: quantity))
+                }
+                
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
                 }
             }// toolbar
             .alert("Error", isPresented: $viewModel.showErrorAlert) {
