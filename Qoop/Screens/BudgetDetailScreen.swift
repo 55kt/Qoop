@@ -91,7 +91,7 @@ struct BudgetDetailScreen: View {
                                 expenseToEdit = expense
                             }
                             .tint(.blue)
-                        }
+                        }// edit swipe
                         .swipeActions(edge: .trailing) {
                             Button(("Delete"), role: .destructive) {
                                 do {
@@ -100,7 +100,7 @@ struct BudgetDetailScreen: View {
                                     expenseViewModel.handle(error: error)
                                 }
                             }
-                        }
+                        }// delete swipe
                 }// ForEach
             }// Expenses List
         }// Form
@@ -117,6 +117,7 @@ struct BudgetDetailScreen: View {
         .sheet(item: $expenseToEdit) { expenseToEdit in
             NavigationStack {
                 EditExpenseScreen(expense: expenseToEdit)
+                    .presentationDetents([.fraction(0.60)])
             }
         }// Edit Expense sheet
         .sheet(isPresented: $addExpensePresented) {
@@ -139,8 +140,8 @@ struct BudgetDetailScreen: View {
 
 // MARK: - Preview
 #Preview {
-    NavigationStack {
-        BudgetDetailScreen(budget: Budget())
-            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-    }
+    let preview = PersistenceController.preview
+    let context = preview.container.viewContext
+    BudgetDetailScreen(budget: Budget(context: context))
+        .environment(\.managedObjectContext, context)
 }

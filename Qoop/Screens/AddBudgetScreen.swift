@@ -29,7 +29,7 @@ struct AddBudgetScreen: View {
                     TextField("Title", text: $title)
                     TextField("Limit", value: $limit, format: .number)
                         .keyboardType(.decimalPad)
-                }
+                }// Section
                 .padding(10)
                 
                 EmojiPickerRow(title: "Select emoji", selection: $emoji)

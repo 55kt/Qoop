@@ -9,7 +9,6 @@ import CoreData
 
 struct PersistenceController {
     static let shared = PersistenceController()
-    static let emojiData = EmojiDataModel()
     
     @MainActor
     static let preview: PersistenceController = {
@@ -19,13 +18,13 @@ struct PersistenceController {
         let groceries = Budget(context: viewContext)
         groceries.title = "Groceries"
         groceries.limit = 200
-        groceries.emoji = emojiData.emoji["shopping"] ?? EmojiDataModel.defaultEmoji
+        groceries.emoji = "🛒"
         groceries.dateCreated = Date()
         
         let entertainment = Budget(context: viewContext)
         entertainment.title = "Entertainment"
         entertainment.limit = 100
-        entertainment.emoji = emojiData.emoji["film"] ?? EmojiDataModel.defaultEmoji
+        entertainment.emoji = "🎬"
         entertainment.isActive = true
         entertainment.dateCreated = Date()
         
@@ -34,7 +33,7 @@ struct PersistenceController {
         milk.amount = 3.49
         milk.quantity = 5000
         milk.location = "Milk Shop"
-        milk.emoji = emojiData.emoji["milk"] ?? EmojiDataModel.defaultEmoji
+        milk.emoji = "🥛"
         milk.dateCreated = Date()
         
         let cookies = Expense(context: viewContext)
@@ -42,7 +41,7 @@ struct PersistenceController {
         cookies.quantity = 3
         cookies.amount = 2.99
         cookies.location = "Cookies Shop"
-        cookies.emoji = emojiData.emoji["cookie"] ?? EmojiDataModel.defaultEmoji
+        cookies.emoji = "🍪"
         cookies.dateCreated = Date()
         
         entertainment.addToExpenses(cookies)

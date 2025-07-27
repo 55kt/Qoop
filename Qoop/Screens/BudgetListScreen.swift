@@ -63,15 +63,12 @@ struct BudgetListScreen: View {
                     }, expenseViewModel: expenseViewModel
                 )// Other Budgets
                 .transition(.opacity)
-
-                Spacer()
             }// List
             .listStyle(.plain)
             .animation(.easeInOut(duration: 0.2), value: searchText)
             .navigationTitle("Budgets")
             .searchable(text: $searchText)
             .toolbar {
-                
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         isPresented.toggle()

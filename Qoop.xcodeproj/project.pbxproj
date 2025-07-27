@@ -20,7 +20,7 @@
 		4B116E4F2E23F3DE00B45CEC /* BudgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E4E2E23F3DE00B45CEC /* BudgetViewModel.swift */; };
 		4B116E512E2405A100B45CEC /* Budget+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E502E2405A100B45CEC /* Budget+Extensions.swift */; };
 		4B116E542E241A4700B45CEC /* BudgetCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E532E241A4700B45CEC /* BudgetCardView.swift */; };
-		4B116E582E2422E900B45CEC /* EmojiDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E572E2422E900B45CEC /* EmojiDataModel.swift */; };
+		4B116E582E2422E900B45CEC /* emojiCategories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E572E2422E900B45CEC /* emojiCategories.swift */; };
 		4B116E5A2E24294A00B45CEC /* EmojiPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E592E24294A00B45CEC /* EmojiPickerView.swift */; };
 		4B116E5C2E242CD300B45CEC /* EmojiPickerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E5B2E242CD300B45CEC /* EmojiPickerRow.swift */; };
 		4B116E602E25757C00B45CEC /* BudgetDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E5F2E25757C00B45CEC /* BudgetDetailScreen.swift */; };
@@ -73,7 +73,7 @@
 		4B116E4E2E23F3DE00B45CEC /* BudgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetViewModel.swift; sourceTree = "<group>"; };
 		4B116E502E2405A100B45CEC /* Budget+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Budget+Extensions.swift"; sourceTree = "<group>"; };
 		4B116E532E241A4700B45CEC /* BudgetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCardView.swift; sourceTree = "<group>"; };
-		4B116E572E2422E900B45CEC /* EmojiDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiDataModel.swift; sourceTree = "<group>"; };
+		4B116E572E2422E900B45CEC /* emojiCategories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emojiCategories.swift; sourceTree = "<group>"; };
 		4B116E592E24294A00B45CEC /* EmojiPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPickerView.swift; sourceTree = "<group>"; };
 		4B116E5B2E242CD300B45CEC /* EmojiPickerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPickerRow.swift; sourceTree = "<group>"; };
 		4B116E5F2E25757C00B45CEC /* BudgetDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetDetailScreen.swift; sourceTree = "<group>"; };
@@ -218,7 +218,7 @@
 		4B116E552E24227D00B45CEC /* EmojiPicker */ = {
 			isa = PBXGroup;
 			children = (
-				4B116E572E2422E900B45CEC /* EmojiDataModel.swift */,
+				4B116E572E2422E900B45CEC /* emojiCategories.swift */,
 				4B116E592E24294A00B45CEC /* EmojiPickerView.swift */,
 				4B116E5B2E242CD300B45CEC /* EmojiPickerRow.swift */,
 			);
@@ -382,7 +382,7 @@
 				4B116E682E26A8A300B45CEC /* Expense+Extensions.swift in Sources */,
 				4B116E4F2E23F3DE00B45CEC /* BudgetViewModel.swift in Sources */,
 				4B116E6E2E2D429700B45CEC /* EditBudgetScreen.swift in Sources */,
-				4B116E582E2422E900B45CEC /* EmojiDataModel.swift in Sources */,
+				4B116E582E2422E900B45CEC /* emojiCategories.swift in Sources */,
 				4B116E622E2582E000B45CEC /* ExpenseViewModel.swift in Sources */,
 				4B116E352E22BF8400B45CEC /* Persistence.swift in Sources */,
 				4B116E542E241A4700B45CEC /* BudgetCardView.swift in Sources */,
@@ -447,7 +447,6 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -478,7 +477,6 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

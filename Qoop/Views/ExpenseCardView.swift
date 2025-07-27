@@ -17,7 +17,7 @@ struct ExpenseCardView: View {
         VStack(spacing: 0) {
             VStack(spacing: 4) {
                 HStack(alignment: .center, spacing: 0) {
-                    Text(expense.emoji ?? EmojiDataModel.defaultEmoji)
+                    Text(expense.emoji ?? "💸")
                         .font(.system(size: 40))
                         .frame(width: 44, height: 44)
                         
@@ -41,7 +41,7 @@ struct ExpenseCardView: View {
                             Text("Price per unit:")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
-                            Text("\(expense.amount, format: .currency(code: Locale.currencyCode))")
+                            Text("\(expense.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))")
                                 .font(.subheadline)
                                 .fontWeight(.medium)
                         }// HStack
@@ -51,7 +51,7 @@ struct ExpenseCardView: View {
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                             
-                            Text("\(expense.total, format: .currency(code: Locale.currencyCode))")
+                            Text("\(expense.total, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))")
                                 .font(.title3)
                                 .fontWeight(.bold)
                                 .foregroundColor(.primary)

@@ -27,12 +27,9 @@ struct BudgetCardView: View {
     // MARK: - Body
     var body: some View {
         VStack(spacing: 0) {
-            // Main content area
             VStack(spacing: 16) {
-                // Header with emoji and title
                 HStack(alignment: .center, spacing: 16) {
-                    // Emoji with larger background
-                    Text(budget.emoji ?? EmojiDataModel.defaultEmoji)
+                    Text(budget.emoji ?? "💸")
                         .font(.system(size: 48))
                         .frame(width: 72, height: 72)
                         .background(
@@ -41,7 +38,6 @@ struct BudgetCardView: View {
                         )
                     
                     VStack(alignment: .leading, spacing: 8) {
-                        // Title and status badge
                         HStack {
                             Text(budget.title ?? "")
                                 .font(.title2)
@@ -66,8 +62,8 @@ struct BudgetCardView: View {
                                     Capsule()
                                         .fill(Color.green.opacity(0.1))
                                 )
-                            }
-                        }
+                            }// if budget is active
+                        }// HStack
                         
                         // Budget amounts
                         VStack(alignment: .leading, spacing: 4) {
@@ -80,7 +76,7 @@ struct BudgetCardView: View {
                                     .font(.subheadline)
                                     .fontWeight(.medium)
                                     .foregroundColor(.primary)
-                            }
+                            }// HStack
                             
                             HStack {
                                 Text("Remaining:")
@@ -91,10 +87,10 @@ struct BudgetCardView: View {
                                     .font(.title3)
                                     .fontWeight(.bold)
                                     .foregroundColor(statusColor)
-                            }
-                        }
-                    }
-                }
+                            }// HStack
+                        }// VStack
+                    }// VStack
+                }// HStack
                 
                 // Progress bar
                 VStack(alignment: .leading, spacing: 6) {
@@ -133,11 +129,11 @@ struct BudgetCardView: View {
                                     )
                                     .frame(width: geometry.size.width * progress, height: 8)
                                     .animation(.easeInOut(duration: 0.3), value: progress)
-                            }
-                        }
-                    }
+                            }// if budget limit
+                        }// ZStack
+                    }// GeometryReader
                     .frame(height: 8)
-                }
+                }// VStack
                 
                 // Footer with creation date
                 HStack {
@@ -155,18 +151,19 @@ struct BudgetCardView: View {
                     .font(.caption2)
                     .foregroundColor(.secondary)
                     
-                }
-            }
-        }
-        
-    }
+                }// HStack
+            }// VStack
+        }// VStack
+    }// body
     
+    // MARK: - Methods
     static func remainingStatusColor(limit: Double, remaining: Double) -> Color {
         guard limit > 0, remaining >= 0 else { return .gray }
         let percentage = remaining / limit
         return percentage >= 0.75 ? .green : percentage >= 0.25 ? .yellow : .red
     }
-}
+    
+}// View
 
 #Preview {
     struct PreviewContainer: View {
@@ -200,27 +197,4 @@ struct BudgetCardView: View {
     
     return PreviewContainer()
         .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-}
-
-#Preview("Dark Mode") {
-    struct PreviewContainer: View {
-        let context = PersistenceController.preview.container.viewContext
-        let viewModel = ExpenseViewModel()
-        
-        var body: some View {
-            let budget = Budget(context: context)
-            budget.title = "Shopping"
-            budget.limit = 300
-            budget.emoji = "🛍️"
-            budget.dateCreated = Date()
-            budget.isActive = true
-            
-            return BudgetCardView(budget: budget, expenseViewModel: viewModel)
-                .padding()
-        }
-    }
-    
-    return PreviewContainer()
-        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-        .preferredColorScheme(.dark)
 }

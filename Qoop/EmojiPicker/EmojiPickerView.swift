@@ -8,31 +8,62 @@
 import SwiftUI
 
 struct EmojiPickerView: View {
-    @ObservedObject private var vm = EmojiDataModel()
     @Binding var selectedEmoji: String
     @Environment(\.dismiss) private var dismiss
-    
+
+    @State private var selectedCategoryIndex = 0
+    @State private var searchText = ""
+
+    private var filteredEmojis: [Emoji] {
+        if searchText.isEmpty {
+            return emojiCategories[selectedCategoryIndex].emojis
+        } else {
+            return emojiCategories.flatMap { $0.emojis }.filter {
+                $0.name.localizedCaseInsensitiveContains(searchText) || $0.symbol.contains(searchText)
+            }
+        }
+    }
+
     var body: some View {
         NavigationStack {
-            ScrollView {
-                LazyVGrid(columns: Array(repeating: GridItem(), count: 5)) {
-                    ForEach(vm.emojiFilter, id: \.self) { iconKey in
-                        Text(vm.emoji[iconKey] ?? "❓")
-                            .font(.title)
-                            .padding(10)
-                            .frame(width: 60, height: 60)
-                            .background(.ultraThinMaterial, in: Circle())
-                            .onTapGesture {
-                                selectedEmoji = vm.emoji[iconKey] ?? ""
-                                dismiss()
-                            }
+            VStack {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 12) {
+                        ForEach(emojiCategories.indices, id: \.self) { index in
+                            let category = emojiCategories[index]
+                            Text(category.name)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 8)
+                                .background(selectedCategoryIndex == index ? Color.blue.opacity(0.2) : Color.clear)
+                                .cornerRadius(10)
+                                .onTapGesture {
+                                    selectedCategoryIndex = index
+                                }
+                        }
                     }
+                    .padding(.horizontal)
                 }
-                .searchable(text: $vm.searchText)
+
+                ScrollView {
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 5), spacing: 12) {
+                        ForEach(filteredEmojis) { emoji in
+                            Text(emoji.symbol)
+                                .font(.title)
+                                .frame(width: 60, height: 60)
+                                .background(.ultraThinMaterial, in: Circle())
+                                .onTapGesture {
+                                    selectedEmoji = emoji.symbol
+                                    dismiss()
+                                }
+                                .transition(.scale)
+                        }
+                    }
+                    .padding()
+                }
             }
             .navigationTitle("Emojis")
             .navigationBarTitleDisplayMode(.inline)
-            .padding(.horizontal, 8)
+            .searchable(text: $searchText, prompt: "Search Emojis")
         }
     }
 }
