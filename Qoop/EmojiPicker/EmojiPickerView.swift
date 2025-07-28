@@ -16,24 +16,29 @@ struct EmojiPickerView: View {
     
     private var filteredEmojis: [Emoji] {
         let emojis: [Emoji]
-        if searchText.isEmpty {
+        if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             emojis = emojiCategories[selectedCategoryIndex].emojis
         } else {
             emojis = emojiCategories.flatMap { $0.emojis }.filter {
                 $0.name.localizedCaseInsensitiveContains(searchText)
             }
         }
-        return emojis.filter { !$0.symbol.isEmpty && !$0.symbol.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
-    }// filtered emoji
+        return emojis.filter { !$0.symbol.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+    }
     
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 emojiGrid
+                    .id(selectedCategoryIndex)
+                    .searchable(text: $searchText)
+                
+                if searchText.isEmpty {
+                    categorySection
+                }// if
             }// VStack
             .navigationTitle("Emojis")
             .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $searchText)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") {
@@ -41,10 +46,6 @@ struct EmojiPickerView: View {
                     }
                 }
             }// toolbar
-            
-            if searchText.isEmpty {
-                categorySection
-            }// if
         }// NavigationStack
     }// body
     
@@ -67,7 +68,7 @@ struct EmojiPickerView: View {
             .padding(.horizontal, 16)
         }
         .padding(.bottom, 12)
-    }
+    }// categorySection
     
     // MARK: - Emoji Grid
     private var emojiGrid: some View {
@@ -89,11 +90,10 @@ struct EmojiPickerView: View {
             .padding(.horizontal, 16)
             .animation(nil, value: selectedCategoryIndex)
         }
-    }
-}
+    }// emoji
+}// View
 
 // MARK: - Optimized Components
-
 struct CategoryButton: View {
     let title: String
     let isSelected: Bool
@@ -107,10 +107,8 @@ struct CategoryButton: View {
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
                 .background(
-                    isSelected ? Color.accentColor : Color.clear,
-                    in: Capsule()
+                    Capsule().fill(isSelected ? Color.accentColor : Color.clear)
                 )
-                .animation(.easeInOut(duration: 0.2), value: isSelected)
         }
         .buttonStyle(PlainButtonStyle())
     }
@@ -125,10 +123,11 @@ struct EmojiCell: View {
             Text(emoji)
                 .font(.system(size: 40))
                 .frame(width: 44, height: 44)
+                .contentShape(Rectangle())
         }
         .buttonStyle(PlainButtonStyle())
     }
-}// EmojiCell
+}
 
 // MARK: - Preview
 #Preview {

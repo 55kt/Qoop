@@ -79,7 +79,6 @@ struct BudgetDetailScreen: View {
                 }// Edit Button
             }// Budget Details Section
             
-            
             // MARK: - Expenses List
             Section("Expenses") {
                 
