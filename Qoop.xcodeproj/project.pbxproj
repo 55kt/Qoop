@@ -35,6 +35,9 @@
 		4B116E722E2FCB0200B45CEC /* OtherBudgetsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E712E2FCB0200B45CEC /* OtherBudgetsSectionView.swift */; };
 		4B116E772E340A4F00B45CEC /* ExpenseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E762E340A4F00B45CEC /* ExpenseError.swift */; };
 		4B116E792E351A6D00B45CEC /* BudgetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E782E351A6D00B45CEC /* BudgetError.swift */; };
+		4B116E7B2E3911AF00B45CEC /* PDFReportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E7A2E3911AF00B45CEC /* PDFReportViewModel.swift */; };
+		4B116E7D2E39146600B45CEC /* PDFReportScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E7C2E39146600B45CEC /* PDFReportScreen.swift */; };
+		4B116E7F2E39151500B45CEC /* PDFKitPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E7E2E39151500B45CEC /* PDFKitPreviewView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +91,9 @@
 		4B116E712E2FCB0200B45CEC /* OtherBudgetsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherBudgetsSectionView.swift; sourceTree = "<group>"; };
 		4B116E762E340A4F00B45CEC /* ExpenseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpenseError.swift; sourceTree = "<group>"; };
 		4B116E782E351A6D00B45CEC /* BudgetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetError.swift; sourceTree = "<group>"; };
+		4B116E7A2E3911AF00B45CEC /* PDFReportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFReportViewModel.swift; sourceTree = "<group>"; };
+		4B116E7C2E39146600B45CEC /* PDFReportScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFReportScreen.swift; sourceTree = "<group>"; };
+		4B116E7E2E39151500B45CEC /* PDFKitPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFKitPreviewView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +186,7 @@
 				4B116E6B2E293CE200B45CEC /* AddExpenseScreen.swift */,
 				4B116E692E27F9FD00B45CEC /* EditExpenseScreen.swift */,
 				4B116E6D2E2D429700B45CEC /* EditBudgetScreen.swift */,
+				4B116E7C2E39146600B45CEC /* PDFReportScreen.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -200,6 +207,7 @@
 			children = (
 				4B116E4E2E23F3DE00B45CEC /* BudgetViewModel.swift */,
 				4B116E612E2582E000B45CEC /* ExpenseViewModel.swift */,
+				4B116E7A2E3911AF00B45CEC /* PDFReportViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -211,6 +219,7 @@
 				4B116E652E26A7C300B45CEC /* ExpenseCardView.swift */,
 				4B116E6F2E2FCA0300B45CEC /* ActiveBudgetsSectionView.swift */,
 				4B116E712E2FCB0200B45CEC /* OtherBudgetsSectionView.swift */,
+				4B116E7E2E39151500B45CEC /* PDFKitPreviewView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -373,9 +382,11 @@
 				4B116E6A2E27F9FD00B45CEC /* EditExpenseScreen.swift in Sources */,
 				4B116E772E340A4F00B45CEC /* ExpenseError.swift in Sources */,
 				4B116E512E2405A100B45CEC /* Budget+Extensions.swift in Sources */,
+				4B116E7F2E39151500B45CEC /* PDFKitPreviewView.swift in Sources */,
 				4B116E492E22E5C700B45CEC /* AddBudgetScreen.swift in Sources */,
 				4B116E5C2E242CD300B45CEC /* EmojiPickerRow.swift in Sources */,
 				4B116E4C2E22EA1D00B45CEC /* String+Extensions.swift in Sources */,
+				4B116E7B2E3911AF00B45CEC /* PDFReportViewModel.swift in Sources */,
 				4B116E602E25757C00B45CEC /* BudgetDetailScreen.swift in Sources */,
 				4B116E472E22C64C00B45CEC /* BudgetListScreen.swift in Sources */,
 				4B116E6C2E293CE200B45CEC /* AddExpenseScreen.swift in Sources */,
@@ -387,6 +398,7 @@
 				4B116E352E22BF8400B45CEC /* Persistence.swift in Sources */,
 				4B116E542E241A4700B45CEC /* BudgetCardView.swift in Sources */,
 				4B116E362E22BF8400B45CEC /* Qoop.xcdatamodeld in Sources */,
+				4B116E7D2E39146600B45CEC /* PDFReportScreen.swift in Sources */,
 				4B116E792E351A6D00B45CEC /* BudgetError.swift in Sources */,
 				4B116E5A2E24294A00B45CEC /* EmojiPickerView.swift in Sources */,
 				4B116E662E26A7C300B45CEC /* ExpenseCardView.swift in Sources */,
