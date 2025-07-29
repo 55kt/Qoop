@@ -9,16 +9,34 @@ import SwiftUI
 import CoreData
 import PDFKit
 
+enum PDFReportError: LocalizedError, Identifiable {
+    var id: String { localizedDescription }
+
+    case generationFailed
+    case invalidPDFData
+    case previewFailed
+
+    var errorDescription: String? {
+        switch self {
+        case .generationFailed: return "Failed to generate PDF."
+        case .invalidPDFData: return "PDF data is invalid."
+        case .previewFailed: return "Failed to preview PDF."
+        }
+    }
+}
+
 struct PDFReportScreen: View {
     @Environment(\.managedObjectContext) private var context
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Budget.dateCreated, ascending: false)],
         animation: .default
     ) private var budgets: FetchedResults<Budget>
-    
+
     @State private var selectedBudget: Budget? = nil
     @State private var showPDFPreview = false
     @State private var generatedPDFData: Data? = nil
+    @State private var isGenerating = false
+    @State private var activeError: PDFReportError? = nil
 
     var body: some View {
         NavigationStack {
@@ -41,19 +59,25 @@ struct PDFReportScreen: View {
                         }
 
                         HStack(spacing: 16) {
-                            Button("Preview") {
-                                selectedBudget = budget
-                                if let pdfData = PDFReportViewModel.generatePDF(for: budget) {
-                                    generatedPDFData = pdfData
-                                    // Проверка валидности PDF
-                                    if PDFDocument(data: pdfData) != nil {
-                                        print("✅ PDF data is valid")
-                                        showPDFPreview = true
-                                    } else {
-                                        print("❌ PDF data is invalid")
+                            Button(action: {
+                                Task {
+                                    isGenerating = true
+                                    selectedBudget = budget
+                                    guard let pdfData = PDFReportViewModel.generatePDF(for: budget),
+                                          PDFDocument(data: pdfData) != nil else {
+                                        activeError = .invalidPDFData
+                                        isGenerating = false
+                                        return
                                     }
+                                    generatedPDFData = pdfData
+                                    showPDFPreview = true
+                                    isGenerating = false
+                                }
+                            }) {
+                                if isGenerating && selectedBudget == budget {
+                                    ProgressView()
                                 } else {
-                                    print("❌ Failed to generate PDF")
+                                    Text("Preview")
                                 }
                             }
                             .buttonStyle(.bordered)
@@ -65,7 +89,7 @@ struct PDFReportScreen: View {
                                         .first
                                     PDFReportViewModel.savePDFToFiles(data: pdfData, name: "\(budget.title ?? "Report").pdf", from: rootVC)
                                 } else {
-                                    print("❌ Failed to generate PDF for saving")
+                                    activeError = .generationFailed
                                 }
                             }
                             .buttonStyle(.borderedProminent)
@@ -79,8 +103,11 @@ struct PDFReportScreen: View {
                 if let data = generatedPDFData {
                     PDFKitPreviewView(pdfData: data)
                 } else {
-                    Text("Failed to load PDF")
+                    Text("Preview unavailable")
                 }
+            }
+            .alert(item: $activeError) { error in
+                Alert(title: Text("Error"), message: Text(error.localizedDescription), dismissButton: .default(Text("OK")))
             }
         }
     }
