@@ -15,9 +15,10 @@ struct PDFReportScreen: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Budget.dateCreated, ascending: false)],
         animation: .default
     ) private var budgets: FetchedResults<Budget>
-
+    
     @StateObject private var viewModel = PDFReportViewModel()
-
+    @State private var generatingBudgets: [Budget: Bool] = [:]
+    
     var body: some View {
         NavigationStack {
             List {
@@ -43,18 +44,18 @@ struct PDFReportScreen: View {
             }
         }
     }
-
+    
     private func budgetCard(for budget: Budget) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(alignment: .top, spacing: 16) {
                 Text(budget.emoji ?? "📄")
                     .font(.system(size: 55))
-
+                
                 VStack(alignment: .leading, spacing: 4) {
                     Text(budget.title ?? "Untitled")
                         .font(.title2)
                         .fontWeight(.semibold)
-
+                    
                     if let date = budget.dateCreated {
                         Text("Created \(date.formatted(date: .abbreviated, time: .omitted))")
                             .font(.subheadline)
@@ -65,14 +66,17 @@ struct PDFReportScreen: View {
             actionButtons(for: budget)
         }
     }
-
+    
     private func actionButtons(for budget: Budget) -> some View {
         HStack(spacing: 12) {
             Button {
-                viewModel.previewPDF(for: budget)
+                generatingBudgets[budget] = true
+                viewModel.previewPDF(for: budget) {
+                    generatingBudgets[budget] = false
+                }
             } label: {
                 HStack {
-                    if viewModel.isGenerating && viewModel.selectedBudget == budget {
+                    if generatingBudgets[budget] ?? false {
                         ProgressView().scaleEffect(0.8)
                     } else {
                         Image(systemName: "eye")
@@ -85,8 +89,8 @@ struct PDFReportScreen: View {
                 .foregroundColor(.blue)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
             }
-            .disabled(viewModel.isGenerating)
-
+            .disabled(generatingBudgets[budget] ?? false)
+            
             Button {
                 viewModel.exportPDF(for: budget)
             } label: {

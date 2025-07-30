@@ -35,27 +35,29 @@ final class PDFReportViewModel: ObservableObject {
         }
     }
 
-    func previewPDF(for budget: Budget) {
-        isGenerating = true
-        selectedBudget = budget
+    func previewPDF(for budget: Budget, completion: @escaping () -> Void) {
+            isGenerating = true
+            selectedBudget = budget
 
-        DispatchQueue.global(qos: .userInitiated).async {
-            guard let pdfData = Self.generatePDF(for: budget),
-                  PDFDocument(data: pdfData) != nil else {
-                DispatchQueue.main.async {
-                    self.activeError = .invalidPDFData
-                    self.isGenerating = false
+            DispatchQueue.global(qos: .userInitiated).async {
+                guard let pdfData = Self.generatePDF(for: budget),
+                      PDFDocument(data: pdfData) != nil else {
+                    DispatchQueue.main.async {
+                        self.activeError = .invalidPDFData
+                        self.isGenerating = false
+                        completion()
+                    }
+                    return
                 }
-                return
-            }
 
-            DispatchQueue.main.async {
-                self.generatedPDFData = pdfData
-                self.showPDFPreview = true
-                self.isGenerating = false
+                DispatchQueue.main.async {
+                    self.generatedPDFData = pdfData
+                    self.showPDFPreview = true
+                    self.isGenerating = false
+                    completion()
+                }
             }
         }
-    }
 
     func exportPDF(for budget: Budget) {
         guard let pdfData = Self.generatePDF(for: budget) else {
