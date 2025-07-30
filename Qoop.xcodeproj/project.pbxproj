@@ -38,6 +38,7 @@
 		4B116E7B2E3911AF00B45CEC /* PDFReportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E7A2E3911AF00B45CEC /* PDFReportViewModel.swift */; };
 		4B116E7D2E39146600B45CEC /* PDFReportScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E7C2E39146600B45CEC /* PDFReportScreen.swift */; };
 		4B116E7F2E39151500B45CEC /* PDFKitPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B116E7E2E39151500B45CEC /* PDFKitPreviewView.swift */; };
+		4B8E3E422E3A64D40043BCFB /* PDFReportError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8E3E412E3A64D40043BCFB /* PDFReportError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,7 @@
 		4B116E7A2E3911AF00B45CEC /* PDFReportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFReportViewModel.swift; sourceTree = "<group>"; };
 		4B116E7C2E39146600B45CEC /* PDFReportScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFReportScreen.swift; sourceTree = "<group>"; };
 		4B116E7E2E39151500B45CEC /* PDFKitPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFKitPreviewView.swift; sourceTree = "<group>"; };
+		4B8E3E412E3A64D40043BCFB /* PDFReportError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFReportError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +241,7 @@
 			children = (
 				4B116E762E340A4F00B45CEC /* ExpenseError.swift */,
 				4B116E782E351A6D00B45CEC /* BudgetError.swift */,
+				4B8E3E412E3A64D40043BCFB /* PDFReportError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 				4B116E372E22BF8400B45CEC /* QoopApp.swift in Sources */,
 				4B116E642E26A52800B45CEC /* Locale+Extensions.swift in Sources */,
 				4B116E702E2FCA0300B45CEC /* ActiveBudgetsSectionView.swift in Sources */,
+				4B8E3E422E3A64D40043BCFB /* PDFReportError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

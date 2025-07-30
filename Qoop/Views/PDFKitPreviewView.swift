@@ -10,50 +10,40 @@ import PDFKit
 
 struct PDFKitPreviewView: UIViewRepresentable {
     let pdfData: Data?
-    @State private var isLoading = true
 
     func makeUIView(context: Context) -> UIView {
-        // Create a container view
         let containerView = UIView()
 
-        // Setup PDFView
         let pdfView = PDFView()
-        pdfView.tag = 1 // Tag to identify PDFView
+        pdfView.tag = 1
         pdfView.autoScales = true
         pdfView.displayMode = .singlePageContinuous
         pdfView.displayDirection = .vertical
-        pdfView.frame = containerView.bounds
-        pdfView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        containerView.addSubview(pdfView)
+        pdfView.translatesAutoresizingMaskIntoConstraints = false
 
-        // Setup loading indicator
         let activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.tag = 2 // Tag to identify activity indicator
+        activityIndicator.tag = 2
         activityIndicator.color = .gray
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.startAnimating()
+
+        containerView.addSubview(pdfView)
         containerView.addSubview(activityIndicator)
 
-        // Center the activity indicator
         NSLayoutConstraint.activate([
+            pdfView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            pdfView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            pdfView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            pdfView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+
             activityIndicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
         ])
 
-        // Start loading animation
-        activityIndicator.startAnimating()
-        pdfView.isHidden = true
-
-        // Validate PDF data asynchronously
         DispatchQueue.main.async {
-            if let data = pdfData, PDFDocument(data: data) != nil {
-                pdfView.document = PDFDocument(data: data)
-                isLoading = false
+            if let data = pdfData, let document = PDFDocument(data: data) {
+                pdfView.document = document
                 activityIndicator.stopAnimating()
-                pdfView.isHidden = false
-                print("✅ PDF loaded successfully in PDFKitPreviewView")
-            } else {
-                isLoading = true // Keep loading until valid data
-                print("❌ Waiting for valid PDF data in PDFKitPreviewView")
             }
         }
 
@@ -61,26 +51,15 @@ struct PDFKitPreviewView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: UIView, context: Context) {
-        // Update PDFView if pdfData changes
-        if let pdfView = uiView.viewWithTag(1) as? PDFView {
-            if let data = pdfData, PDFDocument(data: data) != nil {
-                pdfView.document = PDFDocument(data: data)
-                isLoading = false
-                pdfView.isHidden = false
-            } else {
-                pdfView.document = nil
-                isLoading = true
-                pdfView.isHidden = true
-            }
-        }
+        guard let pdfView = uiView.viewWithTag(1) as? PDFView,
+              let activityIndicator = uiView.viewWithTag(2) as? UIActivityIndicatorView else { return }
 
-        // Update loading state
-        if let activityIndicator = uiView.viewWithTag(2) as? UIActivityIndicatorView {
-            if isLoading {
-                activityIndicator.startAnimating()
-            } else {
-                activityIndicator.stopAnimating()
-            }
+        if let data = pdfData, let document = PDFDocument(data: data) {
+            pdfView.document = document
+            activityIndicator.stopAnimating()
+        } else {
+            pdfView.document = nil
+            activityIndicator.startAnimating()
         }
     }
 }
